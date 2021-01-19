@@ -70,6 +70,7 @@ uint8_t blackboxGetRateDenom(void);
 void blackboxValidateConfig(void);
 void blackboxFinish(void);
 bool blackboxMayEditConfig(void);
+bool mspIsInactive(void);
 #ifdef UNIT_TEST
 STATIC_UNIT_TESTED void blackboxLogIteration(timeUs_t currentTimeUs);
 STATIC_UNIT_TESTED bool blackboxShouldLogPFrame(void);

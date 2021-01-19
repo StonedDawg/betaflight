@@ -1607,13 +1607,20 @@ STATIC_UNIT_TESTED void blackboxLogIteration(timeUs_t currentTimeUs)
 /**
  * Call each flight loop iteration to perform blackbox logging.
  */
+bool mspIsInactive(void){
+    if(((getArmingDisableFlags()) & ARMING_DISABLED_MSP)){
+        return 0;
+    } else {
+        return 1;
+    }
+}
 void blackboxUpdate(timeUs_t currentTimeUs)
 {
     static BlackboxState cacheFlushNextState;
 
     switch (blackboxState) {
     case BLACKBOX_STATE_STOPPED:
-        if (ARMING_FLAG(ARMED) || (((IS_RC_MODE_ACTIVE(BOXBLACKBOX))) && (!(getArmingDisableFlags() & ARMING_DISABLED_MSP)))) {
+        if (ARMING_FLAG(ARMED) || (((IS_RC_MODE_ACTIVE(BOXBLACKBOX))) && (mspIsInactive()) )) {
             blackboxOpen();
             blackboxStart();
         }
