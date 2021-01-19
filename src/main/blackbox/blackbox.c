@@ -1613,7 +1613,7 @@ void blackboxUpdate(timeUs_t currentTimeUs)
 
     switch (blackboxState) {
     case BLACKBOX_STATE_STOPPED:
-        if (ARMING_FLAG(ARMED) || ((IS_RC_MODE_ACTIVE(BOXBLACKBOX))) && (getArmingDisableFlags() & ARMING_DISABLED_MSP)) {
+        if (ARMING_FLAG(ARMED) || (((IS_RC_MODE_ACTIVE(BOXBLACKBOX))) && (getArmingDisableFlags() & ARMING_DISABLED_MSP))) {
             blackboxOpen();
             blackboxStart();
         }
