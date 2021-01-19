@@ -1736,7 +1736,7 @@ void blackboxUpdate(timeUs_t currentTimeUs)
     case BLACKBOX_STATE_RUNNING:
         // On entry to this state, blackboxIteration, blackboxPFrameIndex and blackboxIFrameIndex are reset to 0
         // Prevent the Pausing of the log on the mode switch if in Motor Test Mode
-        if (blackboxModeActivationConditionPresent && !IS_RC_MODE_ACTIVE(BOXBLACKBOX) && !startedLoggingInTestMode && !mspIsInactive) {
+        if (blackboxModeActivationConditionPresent && !IS_RC_MODE_ACTIVE(BOXBLACKBOX) && !startedLoggingInTestMode && !mspIsInactive()) {
             blackboxSetState(BLACKBOX_STATE_PAUSED);
         } else {
             blackboxLogIteration(currentTimeUs);
