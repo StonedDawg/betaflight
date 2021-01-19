@@ -1609,9 +1609,9 @@ STATIC_UNIT_TESTED void blackboxLogIteration(timeUs_t currentTimeUs)
  */
 bool mspIsInactive(void){
     if(((getArmingDisableFlags()) & ARMING_DISABLED_MSP)){
-        return FALSE;
+        return 0;
     } else {
-        return TRUE;
+        return 1;
     }
 }
 void blackboxUpdate(timeUs_t currentTimeUs)
