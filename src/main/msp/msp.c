@@ -2936,7 +2936,7 @@ static mspResult_e mspProcessInCommand(mspDescriptor_t srcDesc, int16_t cmdMSP, 
             } else {
                 mspArmingEnableByDescriptor(srcDesc);
                 if (mspIsMspArmingEnabled()) {
-                    unsetArmingDisabled(ARMING_DISABLED_MSP);
+                    //unsetArmingDisabled(ARMING_DISABLED_MSP);
 #ifdef USE_RUNAWAY_TAKEOFF
                     runawayTakeoffTemporaryDisable(disableRunawayTakeoff);
 #endif
