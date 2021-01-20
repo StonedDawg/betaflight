@@ -2929,7 +2929,7 @@ static mspResult_e mspProcessInCommand(mspDescriptor_t srcDesc, int16_t cmdMSP, 
                 setArmingDisabled(ARMING_DISABLED_MSP);
                 if (ARMING_FLAG(ARMED)) {
                     disarm(DISARM_REASON_ARMING_DISABLED);
-                    void blackboxSetState(BLACKBOX_STATE_PAUSED);
+                    blackboxSetState(BLACKBOX_STATE_PAUSED);
                 }
 #ifdef USE_RUNAWAY_TAKEOFF
                 runawayTakeoffTemporaryDisable(false);
