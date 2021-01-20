@@ -272,24 +272,6 @@ static const blackboxSimpleFieldDefinition_t blackboxSlowFields[] = {
     {"rxFlightChannelsValid", -1, UNSIGNED, PREDICT(0),      ENCODING(TAG2_3S32)}
 };
 
-typedef enum BlackboxState {
-    BLACKBOX_STATE_DISABLED = 0,
-    BLACKBOX_STATE_STOPPED,
-    BLACKBOX_STATE_PREPARE_LOG_FILE,
-    BLACKBOX_STATE_SEND_HEADER,
-    BLACKBOX_STATE_SEND_MAIN_FIELD_HEADER,
-    BLACKBOX_STATE_SEND_GPS_H_HEADER,
-    BLACKBOX_STATE_SEND_GPS_G_HEADER,
-    BLACKBOX_STATE_SEND_SLOW_HEADER,
-    BLACKBOX_STATE_SEND_SYSINFO,
-    BLACKBOX_STATE_CACHE_FLUSH,
-    BLACKBOX_STATE_PAUSED,
-    BLACKBOX_STATE_RUNNING,
-    BLACKBOX_STATE_SHUTTING_DOWN,
-    BLACKBOX_STATE_START_ERASE,
-    BLACKBOX_STATE_ERASING,
-    BLACKBOX_STATE_ERASED
-} BlackboxState;
 
 
 typedef struct blackboxMainState_s {
@@ -493,7 +475,7 @@ static bool testBlackboxCondition(FlightLogFieldCondition condition)
     return (blackboxConditionCache & (1 << condition)) != 0;
 }
 
-static void blackboxSetState(BlackboxState newState)
+void blackboxSetState(BlackboxState newState)
 {
     //Perform initial setup required for the new state
     switch (newState) {

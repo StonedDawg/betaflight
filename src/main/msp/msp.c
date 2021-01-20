@@ -2929,6 +2929,7 @@ static mspResult_e mspProcessInCommand(mspDescriptor_t srcDesc, int16_t cmdMSP, 
                 setArmingDisabled(ARMING_DISABLED_MSP);
                 if (ARMING_FLAG(ARMED)) {
                     disarm(DISARM_REASON_ARMING_DISABLED);
+                    void blackboxSetState(BLACKBOX_STATE_PAUSED);
                 }
 #ifdef USE_RUNAWAY_TAKEOFF
                 runawayTakeoffTemporaryDisable(false);
@@ -2937,6 +2938,7 @@ static mspResult_e mspProcessInCommand(mspDescriptor_t srcDesc, int16_t cmdMSP, 
                 mspArmingEnableByDescriptor(srcDesc);
                 if (mspIsMspArmingEnabled()) {
                     //unsetArmingDisabled(ARMING_DISABLED_MSP);
+                    
 #ifdef USE_RUNAWAY_TAKEOFF
                     runawayTakeoffTemporaryDisable(disableRunawayTakeoff);
 #endif

@@ -25,6 +25,25 @@
 #include "common/time.h"
 #include "pg/pg.h"
 
+typedef enum BlackboxState {
+    BLACKBOX_STATE_DISABLED = 0,
+    BLACKBOX_STATE_STOPPED,
+    BLACKBOX_STATE_PREPARE_LOG_FILE,
+    BLACKBOX_STATE_SEND_HEADER,
+    BLACKBOX_STATE_SEND_MAIN_FIELD_HEADER,
+    BLACKBOX_STATE_SEND_GPS_H_HEADER,
+    BLACKBOX_STATE_SEND_GPS_G_HEADER,
+    BLACKBOX_STATE_SEND_SLOW_HEADER,
+    BLACKBOX_STATE_SEND_SYSINFO,
+    BLACKBOX_STATE_CACHE_FLUSH,
+    BLACKBOX_STATE_PAUSED,
+    BLACKBOX_STATE_RUNNING,
+    BLACKBOX_STATE_SHUTTING_DOWN,
+    BLACKBOX_STATE_START_ERASE,
+    BLACKBOX_STATE_ERASING,
+    BLACKBOX_STATE_ERASED
+} BlackboxState;
+
 typedef enum BlackboxDevice {
     BLACKBOX_DEVICE_NONE = 0,
     BLACKBOX_DEVICE_FLASH = 1,
@@ -71,6 +90,8 @@ void blackboxValidateConfig(void);
 void blackboxFinish(void);
 bool blackboxMayEditConfig(void);
 bool mspIsInactive(void);
+void blackboxSetState(BlackboxState newState);
+
 #ifdef UNIT_TEST
 STATIC_UNIT_TESTED void blackboxLogIteration(timeUs_t currentTimeUs);
 STATIC_UNIT_TESTED bool blackboxShouldLogPFrame(void);
