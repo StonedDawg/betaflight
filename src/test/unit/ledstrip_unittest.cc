@@ -389,7 +389,7 @@ const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {};
 
 bool isArmingDisabled(void) { return false; }
 
-uint8_t getRssiPercent(void) { return 0; }
+uint8_t getRssi1Percent(void) { return 0; }
 
 bool isFlipOverAfterCrashActive(void) { return false; }
 

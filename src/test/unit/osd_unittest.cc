@@ -693,7 +693,7 @@ TEST_F(OsdTest, TestAlarms)
 TEST_F(OsdTest, TestElementRssi)
 {
     // given
-    osdElementConfigMutable()->item_pos[OSD_RSSI_VALUE] = OSD_POS(8, 1) | OSD_PROFILE_1_FLAG;
+    osdElementConfigMutable()->item_pos[OSD_RSSI1_VALUE] = OSD_POS(8, 1) | OSD_PROFILE_1_FLAG;
     osdConfigMutable()->rssi_alarm = 0;
 
     osdAnalyzeActiveElements();

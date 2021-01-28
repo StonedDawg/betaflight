@@ -1043,7 +1043,7 @@ static void loadMainState(timeUs_t currentTimeUs)
     blackboxCurrent->surfaceRaw = rangefinderGetLatestAltitude();
 #endif
 
-    blackboxCurrent->rssi = getRssi();
+    blackboxCurrent->rssi = getRssi1();
 
 #ifdef USE_SERVOS
     //Tail servo for tricopters

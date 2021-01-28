@@ -69,7 +69,8 @@ static const void *menuOsdActiveElemsOnExit(displayPort_t *pDisp, const OSD_Entr
 const OSD_Entry menuOsdActiveElemsEntries[] =
 {
     {"--- ACTIV ELEM ---", OME_Label,   NULL, NULL, 0},
-    {"RSSI",               OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI_VALUE], DYNAMIC},
+    {"RSSI1",               OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI1_VALUE], DYNAMIC},
+    {"RSSI2",               OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI2_VALUE], DYNAMIC},
 #ifdef USE_RX_RSSI_DBM
     {"RSSI DBM",           OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI_DBM_VALUE], DYNAMIC},
 #endif
