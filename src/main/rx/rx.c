@@ -88,7 +88,8 @@ static uint8_t rfMode = 0;
 #define RSSI_ADC_DIVISOR (4096 / 1024)
 #define RSSI_OFFSET_SCALING (1024 / 100.0f)
 
-rssiSource_e rssiSource;
+rssiSource_e rssi1Source;
+rssiSource_e rssi2Source;
 linkQualitySource_e linkQualitySource;
 
 static bool rxDataProcessingRequired = false;
@@ -346,11 +347,12 @@ void rxInit(void)
 
 #if defined(USE_ADC)
     if (featureIsEnabled(FEATURE_RSSI_ADC)) {
-        rssiSource = RSSI1_SOURCE_ADC;
+        rssi1Source = RSSI1_SOURCE_ADC;
+        rssi2Source = RSSI2_SOURCE_ADC;
     } else
 #endif
     if (rxConfig()->rssi_channel > 0) {
-        rssiSource = RSSI_SOURCE_RX_CHANNEL;
+        rssi1Source = RSSI_SOURCE_RX_CHANNEL;
     }
 
     // Setup source frame RSSI filtering to take averaged values every FRAME_ERR_RESAMPLE_US
@@ -425,13 +427,13 @@ static void setLinkQuality(bool validFrame, timeDelta_t currentDeltaTimeUs)
     }
 #endif
 
-    if (rssiSource == RSSI_SOURCE_FRAME_ERRORS) {
+    if (rssi1Source == RSSI_SOURCE_FRAME_ERRORS) {
         resampleTimeUs += currentDeltaTimeUs;
         rssiSum += validFrame ? RSSI_MAX_VALUE : 0;
         rssiCount++;
 
         if (resampleTimeUs >= FRAME_ERR_RESAMPLE_US) {
-            setRssi1(rssiSum / rssiCount, rssiSource);
+            setRssi1(rssiSum / rssiCount, rssi1Source);
             rssiSum = 0;
             rssiCount = 0;
             resampleTimeUs -= FRAME_ERR_RESAMPLE_US;
@@ -695,7 +697,7 @@ void parseRcChannels(const char *input, rxConfig_t *rxConfig)
 
 void setRssi1Direct(uint16_t newRssi, rssiSource_e source)
 {
-    if (source != rssiSource) {
+    if (source != rssi1Source) {
         return;
     }
 
@@ -704,7 +706,7 @@ void setRssi1Direct(uint16_t newRssi, rssiSource_e source)
 
 void setRssi2Direct(uint16_t newRssi, rssiSource_e source)
 {
-    if (source != rssiSource) {
+    if (source != rssi2Source) {
         return;
     }
 
@@ -726,7 +728,7 @@ static uint16_t updateRssiSamples(uint16_t value)
 
 void setRssi1(uint16_t rssiValue, rssiSource_e source)
 {
-    if (source != rssiSource) {
+    if (source != rssi1Source) {
         return;
     }
 
@@ -740,7 +742,7 @@ void setRssi1(uint16_t rssiValue, rssiSource_e source)
 }
 void setRssi2(uint16_t rssiValue, rssiSource_e source)
 {
-    if (source != rssiSource) {
+    if (source != rssi2Source) {
         return;
     }
 
@@ -755,11 +757,11 @@ void setRssi2(uint16_t rssiValue, rssiSource_e source)
 
 void setRssiMsp(uint8_t newMspRssi)
 {
-    if (rssiSource == RSSI_SOURCE_NONE) {
-        rssiSource = RSSI_SOURCE_MSP;
+    if (rssi1Source == RSSI_SOURCE_NONE) {
+        rssi1Source = RSSI_SOURCE_MSP;
     }
 
-    if (rssiSource == RSSI_SOURCE_MSP) {
+    if (rssi1Source == RSSI_SOURCE_MSP) {
         rssi1 = ((uint16_t)newMspRssi) << 2;
         lastMspRssiUpdateUs = micros();
     }
@@ -799,11 +801,26 @@ static void updateRSSIADC(timeUs_t currentTimeUs)
 
 void updateRSSI(timeUs_t currentTimeUs)
 {
-    switch (rssiSource) {
+    switch (rssi1Source) {
     case RSSI_SOURCE_RX_CHANNEL:
         updateRSSIPWM();
         break;
     case RSSI1_SOURCE_ADC:
+        updateRSSIADC(currentTimeUs);
+        break;
+    case RSSI_SOURCE_MSP:
+        if (cmpTimeUs(micros(), lastMspRssiUpdateUs) > MSP_RSSI_TIMEOUT_US) {
+            rssi1 = 0;
+        }
+        break;
+    default:
+        break;
+    }
+    switch (rssi2Source) {
+    case RSSI_SOURCE_RX_CHANNEL:
+        updateRSSIPWM();
+        break;
+    case RSSI2_SOURCE_ADC:
         updateRSSIADC(currentTimeUs);
         break;
     case RSSI_SOURCE_MSP:
@@ -868,7 +885,7 @@ static int16_t updateRssiDbmSamples(int16_t value)
 
 void setRssiDbm(int16_t rssiDbmValue, rssiSource_e source)
 {
-    if (source != rssiSource) {
+    if (source != rssi1Source) {
         return;
     }
 
@@ -877,7 +894,7 @@ void setRssiDbm(int16_t rssiDbmValue, rssiSource_e source)
 
 void setRssiDbmDirect(int16_t newRssiDbm, rssiSource_e source)
 {
-    if (source != rssiSource) {
+    if (source != rssi1Source) {
         return;
     }
 
@@ -908,7 +925,7 @@ uint16_t rxGetRefreshRate(void)
 
 bool isRssiConfigured(void)
 {
-    return rssiSource != RSSI_SOURCE_NONE;
+    return rssi1Source != RSSI_SOURCE_NONE;
 }
 
 timeDelta_t rxGetFrameDelta(timeDelta_t *frameAgeUs)
