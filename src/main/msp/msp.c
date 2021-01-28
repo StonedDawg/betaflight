@@ -698,7 +698,7 @@ static bool mspCommonProcessOutCommand(int16_t cmdMSP, sbuf_t *dst, mspPostProce
     case MSP_ANALOG:
         sbufWriteU8(dst, (uint8_t)constrain(getLegacyBatteryVoltage(), 0, 255));
         sbufWriteU16(dst, (uint16_t)constrain(getMAhDrawn(), 0, 0xFFFF)); // milliamp hours drawn from battery
-        sbufWriteU16(dst, getRssi());
+        sbufWriteU16(dst, getRssi1());
         sbufWriteU16(dst, (int16_t)constrain(getAmperage(), -0x8000, 0x7FFF)); // send current in 0.01 A steps, range is -320A to 320A
         sbufWriteU16(dst, getBatteryVoltage());
         break;

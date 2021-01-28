@@ -275,7 +275,7 @@ static uint8_t fportFrameStatus(rxRuntimeState_t *rxRuntimeState)
                     } else {
                         result = sbusChannelsDecode(rxRuntimeState, &frame->data.controlData.channels);
 
-                        setRssi(scaleRange(frame->data.controlData.rssi, 0, 100, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_PROTOCOL);
+                        setRssi1(scaleRange(frame->data.controlData.rssi, 0, 100, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_PROTOCOL);
 
                         lastRcFrameReceivedMs = millis();
 

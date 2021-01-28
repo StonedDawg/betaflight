@@ -174,7 +174,7 @@ void srxl2ProcessChannelData(const Srxl2ChannelDataHeader* channelData, rxRuntim
 
     if (channelData->rssi >= 0) {
         const int rssiPercent = channelData->rssi;
-        setRssi(scaleRange(rssiPercent, 0, 100, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_PROTOCOL);
+        setRssi1(scaleRange(rssiPercent, 0, 100, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_PROTOCOL);
     }
 
     //If receiver is in a connected state, and a packet is missed, the channel mask will be 0.

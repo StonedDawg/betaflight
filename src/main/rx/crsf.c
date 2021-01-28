@@ -159,7 +159,7 @@ static void handleCrsfLinkStatisticsFrame(const crsfLinkStatistics_t* statsPtr, 
     int16_t rssiDbm = -1 * (stats.active_antenna ? stats.uplink_RSSI_2 : stats.uplink_RSSI_1);
     if (rssiSource == RSSI_SOURCE_RX_PROTOCOL_CRSF) {
         const uint16_t rssiPercentScaled = scaleRange(rssiDbm, CRSF_RSSI_MIN, 0, 0, RSSI_MAX_VALUE);
-        setRssi(rssiPercentScaled, RSSI_SOURCE_RX_PROTOCOL_CRSF);
+        setRssi1(rssiPercentScaled, RSSI_SOURCE_RX_PROTOCOL_CRSF);
     }
 #ifdef USE_RX_RSSI_DBM
     if (rxConfig()->crsf_use_rx_snr) {

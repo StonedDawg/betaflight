@@ -431,7 +431,7 @@ static void setLinkQuality(bool validFrame, timeDelta_t currentDeltaTimeUs)
         rssiCount++;
 
         if (resampleTimeUs >= FRAME_ERR_RESAMPLE_US) {
-            setRssi(rssiSum / rssiCount, rssiSource);
+            setRssi1(rssiSum / rssiCount, rssiSource);
             rssiSum = 0;
             rssiCount = 0;
             resampleTimeUs -= FRAME_ERR_RESAMPLE_US;
@@ -808,7 +808,7 @@ void updateRSSI(timeUs_t currentTimeUs)
         break;
     case RSSI_SOURCE_MSP:
         if (cmpTimeUs(micros(), lastMspRssiUpdateUs) > MSP_RSSI_TIMEOUT_US) {
-            rssi = 0;
+            rssi1 = 0;
         }
         break;
     default:
