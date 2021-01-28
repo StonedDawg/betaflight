@@ -492,7 +492,7 @@ rx_spi_received_e redpineHandlePacket(uint8_t *const packet, uint8_t *const prot
 
                         rxSpiLedOn();
 
-                        cc2500setRssiDbm(packet[ccLen - 2]);
+                        cc2500setRssi1Dbm(packet[ccLen - 2]);
 
                         ret = RX_SPI_RECEIVED_DATA;
                         nextChannel();

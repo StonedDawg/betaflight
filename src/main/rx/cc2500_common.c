@@ -59,7 +59,7 @@ uint16_t cc2500getRssiDbm(void)
     return rssiDbm;
 }
 
-void cc2500setRssiDbm(uint8_t value)
+void cc2500setRssi1Dbm(uint8_t value)
 {
     if (value >= 128) {
         rssiDbm = ((((uint16_t)value) * 18) >> 5) - 82;

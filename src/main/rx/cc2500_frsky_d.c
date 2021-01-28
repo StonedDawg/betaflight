@@ -232,7 +232,7 @@ rx_spi_received_e frSkyDHandlePacket(uint8_t * const packet, uint8_t * const pro
                             (packet[2] == rxCc2500SpiConfig()->bindTxId[1])) {
                             rxSpiLedOn();
                             nextChannel(1);
-                            cc2500setRssiDbm(packet[18]);
+                            cc2500setRssi1Dbm(packet[18]);
 #if defined(USE_RX_FRSKY_SPI_TELEMETRY)
                             if ((packet[3] % 4) == 2) {
                                 telemetryTimeUs = micros();

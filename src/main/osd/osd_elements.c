@@ -1169,9 +1169,13 @@ static void osdElementRtcTime(osdElementParms_t *element)
 #endif // USE_RTC_TIME
 
 #ifdef USE_RX_RSSI_DBM
-static void osdElementRssiDbm(osdElementParms_t *element)
+static void osdElementRssi1Dbm(osdElementParms_t *element)
 {
-    tfp_sprintf(element->buff, "%c%3d", SYM_RSSI, getRssiDbm());
+    tfp_sprintf(element->buff, "%c%3d", SYM_RSSI, getRssi1Dbm());
+}
+static void osdElementRssi2Dbm(osdElementParms_t *element)
+{
+    tfp_sprintf(element->buff, "%c%3d", SYM_RSSI, getRssi2Dbm());
 }
 #endif // USE_RX_RSSI_DBM
 
@@ -1383,7 +1387,7 @@ static void osdElementWarnings(osdElementParms_t *element)
     }
 #ifdef USE_RX_RSSI_DBM
     // rssi dbm
-    if (osdWarnGetState(OSD_WARNING_RSSI_DBM) && (getRssiDbm() < osdConfig()->rssi_dbm_alarm)) {
+    if (osdWarnGetState(OSD_WARNING_RSSI_DBM) && (getRssi1Dbm() < osdConfig()->rssi_dbm_alarm)) {
         tfp_sprintf(element->buff, "RSSI DBM");
         element->attr = DISPLAYPORT_ATTR_WARNING;
         SET_BLINK(OSD_WARNINGS);

@@ -165,7 +165,7 @@ static void handleCrsfLinkStatisticsFrame(const crsfLinkStatistics_t* statsPtr, 
     if (rxConfig()->crsf_use_rx_snr) {
         rssiDbm = stats.uplink_SNR;
     }
-    setRssiDbm(rssiDbm, RSSI_SOURCE_RX_PROTOCOL_CRSF);
+    setRssi1Dbm(rssiDbm, RSSI_SOURCE_RX_PROTOCOL_CRSF);
 #endif
 
 #ifdef USE_RX_LINK_QUALITY_INFO
@@ -205,9 +205,9 @@ static void crsfCheckRssi(uint32_t currentTimeUs) {
             setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL_CRSF);
 #ifdef USE_RX_RSSI_DBM
             if (rxConfig()->crsf_use_rx_snr) {
-                setRssiDbmDirect(CRSF_SNR_MIN, RSSI_SOURCE_RX_PROTOCOL_CRSF);
+                setRssi1DbmDirect(CRSF_SNR_MIN, RSSI_SOURCE_RX_PROTOCOL_CRSF);
             } else {
-                setRssiDbmDirect(CRSF_RSSI_MIN, RSSI_SOURCE_RX_PROTOCOL_CRSF);
+                setRssi1DbmDirect(CRSF_RSSI_MIN, RSSI_SOURCE_RX_PROTOCOL_CRSF);
             }
 #endif
         }

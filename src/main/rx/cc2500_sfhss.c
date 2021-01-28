@@ -182,7 +182,7 @@ static bool sfhssPacketParse(uint8_t *packet, bool check_txid)
         }
     }
 
-    cc2500setRssiDbm(packet[SFHSS_PACKET_LEN - 2]);
+    cc2500setRssi1Dbm(packet[SFHSS_PACKET_LEN - 2]);
     sfhss_code = GET_CODE(packet);
 
     return true;

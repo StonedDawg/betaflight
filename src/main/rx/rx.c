@@ -73,7 +73,8 @@ const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
 static uint16_t rssi1 = 0;                  // range: [0;1023]
 static uint16_t rssi2 = 0;  
-static int16_t rssiDbm = CRSF_RSSI_MIN;    // range: [-130,20]
+static int16_t rssi1Dbm = CRSF_RSSI_MIN;    // range: [-130,20]
+static int16_t rssi2Dbm = CRSF_RSSI_MIN;    // range: [-130,20]
 static timeUs_t lastMspRssiUpdateUs = 0;
 
 static pt1Filter_t frameErrFilter;
@@ -349,11 +350,10 @@ void rxInit(void)
     if (featureIsEnabled(FEATURE_RSSI_ADC)) {
         rssi1Source = RSSI_SOURCE_ADC;
         rssi2Source = RSSI_SOURCE_ADC;
-    } else
+        rxConfig()->rssi_channel = 0;
+    } 
 #endif
-    if (rxConfig()->rssi_channel > 0) {
-        rssi1Source = RSSI_SOURCE_RX_CHANNEL;
-    }
+    
 
     // Setup source frame RSSI filtering to take averaged values every FRAME_ERR_RESAMPLE_US
     pt1FilterInit(&frameErrFilter, pt1FilterGain(GET_FRAME_ERR_LPF_FREQUENCY(rxConfig()->rssi_src_frame_lpf_period), FRAME_ERR_RESAMPLE_US/1000000.0));
@@ -815,36 +815,10 @@ static void updateRSSIADC(timeUs_t currentTimeUs)
 
 void updateRSSI(timeUs_t currentTimeUs)
 {
-    switch (rssi1Source) {
-    case RSSI_SOURCE_RX_CHANNEL:
-        updateRSSIPWM();
-        break;
-    case RSSI_SOURCE_ADC:
+
         updateRSSIADC(currentTimeUs);
-        break;
-    case RSSI_SOURCE_MSP:
-        if (cmpTimeUs(micros(), lastMspRssiUpdateUs) > MSP_RSSI_TIMEOUT_US) {
-            rssi1 = 0;
-        }
-        break;
-    default:
-        break;
-    }
-    switch (rssi2Source) {
-    case RSSI_SOURCE_RX_CHANNEL:
-        updateRSSIPWM();
-        break;
-    case RSSI_SOURCE_ADC:
         updateRSSIADC(currentTimeUs);
-        break;
-    case RSSI_SOURCE_MSP:
-        if (cmpTimeUs(micros(), lastMspRssiUpdateUs) > MSP_RSSI_TIMEOUT_US) {
-            rssi2 = 0;
-        }
-        break;
-    default:
-        break;
-    }
+
 }
 
 uint16_t getRssi1(void)
@@ -878,11 +852,15 @@ uint8_t getRssi2Percent(void)
 {
     return scaleRange(getRssi2(), 0, RSSI_MAX_VALUE, 0, 100);
 }
-int16_t getRssiDbm(void)
+int16_t getRssi1Dbm(void)
 {
-    return rssiDbm;
+    return rssi1Dbm;
 }
 
+int16_t getRssi2Dbm(void)
+{
+    return rssi2Dbm;
+}
 #define RSSI_SAMPLE_COUNT_DBM 16
 
 static int16_t updateRssiDbmSamples(int16_t value)
@@ -897,22 +875,22 @@ static int16_t updateRssiDbmSamples(int16_t value)
     return sumdbm / RSSI_SAMPLE_COUNT_DBM;
 }
 
-void setRssiDbm(int16_t rssiDbmValue, rssiSource_e source)
+void setRssi1Dbm(int16_t rssiDbmValue, rssiSource_e source)
 {
     if (source != rssi1Source) {
         return;
     }
 
-    rssiDbm = updateRssiDbmSamples(rssiDbmValue);
+    rssi1Dbm = updateRssi1DbmSamples(rssiDbmValue);
 }
 
-void setRssiDbmDirect(int16_t newRssiDbm, rssiSource_e source)
+void setRssi1DbmDirect(int16_t newRssiDbm, rssiSource_e source)
 {
     if (source != rssi1Source) {
         return;
     }
 
-    rssiDbm = newRssiDbm;
+    rssi1Dbm = newRssiDbm;
 }
 
 #ifdef USE_RX_LINK_QUALITY_INFO

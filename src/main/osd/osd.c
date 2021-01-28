@@ -527,7 +527,7 @@ static void osdUpdateStats(void)
 #endif
 
 #ifdef USE_RX_RSSI_DBM
-    value = getRssiDbm();
+    value = getRssi1Dbm();
     if (stats.min_rssi_dbm > value) {
         stats.min_rssi_dbm = value;
     }

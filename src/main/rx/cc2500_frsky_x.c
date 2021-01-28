@@ -393,7 +393,7 @@ rx_spi_received_e frSkyXHandlePacket(uint8_t * const packet, uint8_t * const pro
                         telemetryReceived = true; // now telemetry can be sent
                         skipChannels = false;
                     }
-                    cc2500setRssiDbm(packet[packetLength - 2]);
+                    cc2500setRssi1Dbm(packet[packetLength - 2]);
 
                     telemetrySequenceMarker_t *inFrameMarker = (telemetrySequenceMarker_t *)&packet[21];
 
