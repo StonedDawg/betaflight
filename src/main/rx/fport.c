@@ -348,7 +348,7 @@ static uint8_t fportFrameStatus(rxRuntimeState_t *rxRuntimeState)
     }
 
     if (lastRcFrameReceivedMs && ((millis() - lastRcFrameReceivedMs) > FPORT_MAX_TELEMETRY_AGE_MS)) {
-        setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+        setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
         lastRcFrameReceivedMs = 0;
     }
 

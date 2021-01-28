@@ -342,7 +342,7 @@ extern "C" {
     {
         rssi = newRssi;
     }
-    void setRssiDirect(uint16_t , rssiSource_e ) {}
+    void setRssi1Direct(uint16_t , rssiSource_e ) {}
 
     uint32_t micros(void) { return 0; }
     uint32_t millis(void) { return 0; }

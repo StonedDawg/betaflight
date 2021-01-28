@@ -306,7 +306,7 @@ static void checkTimeout(void)
                 }
                 cyrf6936StartRecv();
             } else {
-                setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+                setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
                 dsmReceiver.status = DSM_RECEIVER_SYNC_A;
                 dsmReceiver.timeout = DSM_SYNC_TIMEOUT_US;
             }

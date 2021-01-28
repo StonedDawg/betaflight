@@ -269,7 +269,7 @@ rx_spi_received_e frSkyDHandlePacket(uint8_t * const packet, uint8_t * const pro
                 if (missingPackets > MAX_MISSING_PKT) {
                     timeoutUs = 50;
 
-                    setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+                    setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
                 }
 
                 missingPackets++;

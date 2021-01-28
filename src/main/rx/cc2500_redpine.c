@@ -506,7 +506,7 @@ rx_spi_received_e redpineHandlePacket(uint8_t *const packet, uint8_t *const prot
             if (cmpTimeUs(micros(), totalTimerUs) > 50 * looptime) {
                 // out of sync with packets - do a complete resysnc
                 rxSpiLedToggle();
-                setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+                setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
                 nextChannel();
                 cc2500Strobe(CC2500_SRX);
                 *protocolState = STATE_UPDATE;

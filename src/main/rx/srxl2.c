@@ -211,7 +211,7 @@ bool srxl2ProcessControlData(const Srxl2Header* header, rxRuntimeState_t *rxRunt
 
     case FailsafeChannelData: {
         globalResult |= RX_FRAME_FAILSAFE;
-        setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+        setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
         // DEBUG_PRINTF("fs channel data\r\n");
     } break;
 

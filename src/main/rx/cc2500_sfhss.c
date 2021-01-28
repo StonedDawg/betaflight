@@ -332,7 +332,7 @@ rx_spi_received_e sfhssSpiDataReceived(uint8_t *packet)
             } else {
                 SET_STATE(STATE_HUNT);
                 sfhssnextChannel();
-                setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+                setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
                 nextFrameReceiveStartTime = currentPacketReceivedTime + NEXT_CH_TIME_HUNT;
             }
             break;
@@ -414,7 +414,7 @@ rx_spi_received_e sfhssSpiDataReceived(uint8_t *packet)
                     if (++missingPackets > MAX_MISSING_PKT) {
                         SET_STATE(STATE_HUNT);
                         sfhssnextChannel();
-                        setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+                        setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
                         nextFrameReceiveStartTime = currentPacketReceivedTime + NEXT_CH_TIME_HUNT;
                         break;
                     }

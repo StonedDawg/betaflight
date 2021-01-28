@@ -463,7 +463,7 @@ rx_spi_received_e frSkyXHandlePacket(uint8_t * const packet, uint8_t * const pro
         if (cmpTimeUs(micros(), packetTimerUs) > timeoutUs * SYNC_DELAY_MAX) {
             rxSpiLedToggle();
 
-            setRssiDirect(0, RSSI_SOURCE_RX_PROTOCOL);
+            setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL);
             nextChannel(1);
             cc2500Strobe(CC2500_SRX);
             *protocolState = STATE_UPDATE;
