@@ -397,14 +397,14 @@ void resumeRxPwmPpmSignal(void)
 
 STATIC_UNIT_TESTED uint16_t updateLinkQualitySamples(uint16_t value)
 {
-    static uint16_t samples[LINK_QUALITY_SAMPLE_COUNT];
-    static uint8_t sampleIndex = 0;
-    static uint16_t sum = 0;
+    static uint16_t samplesLQ[LINK_QUALITY_SAMPLE_COUNT];
+    static uint8_t sampleLQIndex = 0;
+    static uint16_t sumLQ = 0;
 
-    sum += value - samples[sampleIndex];
-    samples[sampleIndex] = value;
-    sampleIndex = (sampleIndex + 1) % LINK_QUALITY_SAMPLE_COUNT;
-    return sum / LINK_QUALITY_SAMPLE_COUNT;
+    sumLQ += value - samplesLQ[sampleLQIndex];
+    samplesLQ[sampleLQIndex] = value;
+    sampleLQIndex = (sampleLQIndex + 1) % LINK_QUALITY_SAMPLE_COUNT;
+    return sumLQ / LINK_QUALITY_SAMPLE_COUNT;
 }
 
 void rxSetRfMode(uint8_t rfModeValue)
@@ -799,25 +799,47 @@ static void updateRSSIPWM(void)
     setRssi1Direct(scaleRange(constrain(pwmRssi, PWM_RANGE_MIN, PWM_RANGE_MAX), PWM_RANGE_MIN, PWM_RANGE_MAX, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_CHANNEL);
 }
 
-static void updateRSSIADC(timeUs_t currentTimeUs)
+static void updateRSSI1ADC(timeUs_t currentTimeUs)
 {
 #ifndef USE_ADC
     UNUSED(currentTimeUs);
 #else
-    static uint32_t rssiUpdateAt = 0;
+    static uint32_t rssiUpdateAt1 = 0;
 
-    if ((int32_t)(currentTimeUs - rssiUpdateAt) < 0) {
+    if ((int32_t)(currentTimeUs - rssiUpdateAt1) < 0) {
         return;
     }
-    rssiUpdateAt = currentTimeUs + DELAY_50_HZ;
+    rssiUpdateAt1 = currentTimeUs + DELAY_50_HZ;
 
     const uint16_t adcRssiSample1 = adcGetChannel(ADC_RSSI1);
-    const uint16_t adcRssiSample2 = adcGetChannel(ADC_RSSI2);
+    //const uint16_t adcRssiSample2 = adcGetChannel(ADC_RSSI2);
     
     uint16_t rssiValue1 = adcRssiSample1 / RSSI_ADC_DIVISOR;
-    uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
+    //uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
 
     setRssi1(rssiValue1, RSSI_SOURCE_ADC);
+    //setRssi2(rssiValue2, RSSI_SOURCE_ADC);
+#endif
+}
+static void updateRSSI2ADC(timeUs_t currentTimeUs)
+{
+#ifndef USE_ADC
+    UNUSED(currentTimeUs);
+#else
+    static uint32_t rssiUpdateAt2 = 0;
+
+    if ((int32_t)(currentTimeUs - rssiUpdateAt2) < 0) {
+        return;
+    }
+    rssiUpdateAt2 = currentTimeUs + DELAY_50_HZ;
+
+    //const uint16_t adcRssiSample1 = adcGetChannel(ADC_RSSI1);
+    const uint16_t adcRssiSample2 = adcGetChannel(ADC_RSSI2);
+    
+    //uint16_t rssiValue1 = adcRssiSample1 / RSSI_ADC_DIVISOR;
+    uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
+
+    //setRssi1(rssiValue1, RSSI_SOURCE_ADC);
     setRssi2(rssiValue2, RSSI_SOURCE_ADC);
 #endif
 }
@@ -825,9 +847,9 @@ static void updateRSSIADC(timeUs_t currentTimeUs)
 void updateRSSI(timeUs_t currentTimeUs)
 {
 
-        updateRSSIADC(currentTimeUs);
-        updateRSSIADC(currentTimeUs);
-
+        updateRSSI1ADC(currentTimeUs);
+        updateRSSI1ADC(currentTimeUs);
+        
 }
 
 uint16_t getRssi1(void)
@@ -915,7 +937,7 @@ static int16_t updateRssi2DbmSamples(int16_t value)
 
 void setRssi2Dbm(int16_t rssiDbmValue, rssiSource_e source)
 {
-    if (source != rssi1Source) {
+    if (source != rssi2Source) {
         return;
     }
 
@@ -924,7 +946,7 @@ void setRssi2Dbm(int16_t rssiDbmValue, rssiSource_e source)
 
 void setRssi2DbmDirect(int16_t newRssiDbm, rssiSource_e source)
 {
-    if (source != rssi1Source) {
+    if (source != rssi2Source) {
         return;
     }
 
