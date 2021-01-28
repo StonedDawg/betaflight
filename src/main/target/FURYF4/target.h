@@ -145,8 +145,8 @@
 #define USE_ADC
 #define DEFAULT_VOLTAGE_METER_SOURCE VOLTAGE_METER_ADC
 #define VBAT_ADC_PIN            PC1
-#define RSSI_ADC_PIN            PC2
-#define CURRENT_METER_ADC_PIN   PC3
+#define RSSI1_ADC_PIN            PC2
+#define RSSI2_ADC_PIN   PC3
 
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
 #define SERIALRX_UART           SERIAL_PORT_USART1

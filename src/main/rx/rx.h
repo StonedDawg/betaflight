@@ -151,7 +151,8 @@ typedef struct rxRuntimeState_s {
 
 typedef enum {
     RSSI_SOURCE_NONE = 0,
-    RSSI_SOURCE_ADC,
+    RSSI1_SOURCE_ADC,
+    RSSI2_SOURCE_ADC,
     RSSI_SOURCE_RX_CHANNEL,
     RSSI_SOURCE_RX_PROTOCOL,
     RSSI_SOURCE_MSP,
@@ -183,11 +184,14 @@ void parseRcChannels(const char *input, struct rxConfig_s *rxConfig);
 #define RSSI_MAX_VALUE 1023
 
 void setRssiDirect(uint16_t newRssi, rssiSource_e source);
-void setRssi(uint16_t rssiValue, rssiSource_e source);
+void setRssi1(uint16_t rssiValue, rssiSource_e source);
+void setRssi2(uint16_t rssiValue, rssiSource_e source);
 void setRssiMsp(uint8_t newMspRssi);
 void updateRSSI(timeUs_t currentTimeUs);
-uint16_t getRssi(void);
-uint8_t getRssiPercent(void);
+uint16_t getRssi1(void);
+uint8_t getRssi1Percent(void);
+uint16_t getRssi2(void);
+uint8_t getRssi2Percent(void);
 bool isRssiConfigured(void);
 
 #define LINK_QUALITY_MAX_VALUE 1023

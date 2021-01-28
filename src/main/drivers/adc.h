@@ -66,12 +66,13 @@ typedef enum {
     ADC_BATTERY = 0,
     ADC_CURRENT = 1,
     ADC_EXTERNAL1 = 2,
-    ADC_RSSI = 3,
+    ADC_RSSI1 = 3,
+    ADC_RSSI2 = 4,
 #if defined(STM32H7) || defined(STM32G4)
     // On H7 and G4, internal sensors are treated in the similar fashion as regular ADC inputs
-    ADC_CHANNEL_INTERNAL = 4,
-    ADC_TEMPSENSOR = 4,
-    ADC_VREFINT = 5,
+    ADC_CHANNEL_INTERNAL = 5,
+    ADC_TEMPSENSOR = 5,
+    ADC_VREFINT = 6,
 #endif
     ADC_CHANNEL_COUNT
 } AdcChannel;

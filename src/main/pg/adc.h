@@ -37,7 +37,8 @@ typedef struct adcChannelConfig_t {
 
 typedef struct adcConfig_s {
     adcChannelConfig_t vbat;
-    adcChannelConfig_t rssi;
+    adcChannelConfig_t rssi1;
+    adcChannelConfig_t rssi2;
     adcChannelConfig_t current;
     adcChannelConfig_t external1;
     int8_t device; // ADCDevice

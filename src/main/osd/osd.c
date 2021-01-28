@@ -295,7 +295,8 @@ void pgResetFn_osdConfig(osdConfig_t *osdConfig)
         osdWarnSetState(i, true);
     }
     // turn off RSSI & Link Quality warnings by default
-    osdWarnSetState(OSD_WARNING_RSSI, false);
+    osdWarnSetState(OSD_WARNING_RSSI1, false);
+    osdWarnSetState(OSD_WARNING_RSSI2, false);
     osdWarnSetState(OSD_WARNING_LINK_QUALITY, false);
     osdWarnSetState(OSD_WARNING_RSSI_DBM, false);
     // turn off the over mah capacity warning
@@ -502,7 +503,7 @@ static void osdUpdateStats(void)
         stats.max_current = value;
     }
 
-    value = getRssiPercent();
+    value = getRssi1Percent();
     if (stats.min_rssi > value) {
         stats.min_rssi = value;
     }

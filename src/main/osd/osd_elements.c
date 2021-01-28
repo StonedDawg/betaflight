@@ -1143,16 +1143,24 @@ static void osdElementRemainingTimeEstimate(osdElementParms_t *element)
     }
 }
 
-static void osdElementRssi(osdElementParms_t *element)
+static void osdElementRssi1(osdElementParms_t *element)
 {
-    uint16_t osdRssi = getRssi() * 100 / 1024; // change range
+    uint16_t osdRssi = getRssi1() * 100 / 1024; // change range
     if (osdRssi >= 100) {
         osdRssi = 99;
     }
 
     tfp_sprintf(element->buff, "%c%2d", SYM_RSSI, osdRssi);
 }
+static void osdElementRssi2(osdElementParms_t *element)
+{
+    uint16_t osdRssi = getRssi2() * 100 / 1024; // change range
+    if (osdRssi >= 100) {
+        osdRssi = 99;
+    }
 
+    tfp_sprintf(element->buff, "%c%2d", SYM_RSSI, osdRssi);
+}
 #ifdef USE_RTC_TIME
 static void osdElementRtcTime(osdElementParms_t *element)
 {
@@ -1362,8 +1370,13 @@ static void osdElementWarnings(osdElementParms_t *element)
 #endif // USE_LAUNCH_CONTROL
 
     // RSSI
-    if (osdWarnGetState(OSD_WARNING_RSSI) && (getRssiPercent() < osdConfig()->rssi_alarm)) {
-        tfp_sprintf(element->buff, "RSSI LOW");
+    if (osdWarnGetState(OSD_WARNING_RSSI1) && (getRssi1Percent() < osdConfig()->rssi_alarm)) {
+        tfp_sprintf(element->buff, "RSSI1 LOW");
+        element->attr = DISPLAYPORT_ATTR_WARNING;
+        SET_BLINK(OSD_WARNINGS);
+        return;
+    }if (osdWarnGetState(OSD_WARNING_RSSI2) && (getRssi2Percent() < osdConfig()->rssi_alarm)) {
+        tfp_sprintf(element->buff, "RSSI2 LOW");
         element->attr = DISPLAYPORT_ATTR_WARNING;
         SET_BLINK(OSD_WARNINGS);
         return;
@@ -1544,7 +1557,8 @@ static void osdElementWarnings(osdElementParms_t *element)
 
 static const uint8_t osdElementDisplayOrder[] = {
     OSD_MAIN_BATT_VOLTAGE,
-    OSD_RSSI_VALUE,
+    OSD_RSSI1_VALUE,
+    OSD_RSSI2_VALUE,
     OSD_CROSSHAIRS,
     OSD_HORIZON_SIDEBARS,
     OSD_ITEM_TIMER_1,
@@ -1617,7 +1631,8 @@ static const uint8_t osdElementDisplayOrder[] = {
 
 const osdElementDrawFn osdElementDrawFunction[OSD_ITEM_COUNT] = {
     [OSD_CAMERA_FRAME]            = NULL,  // only has background. Added first so it's the lowest "layer" and doesn't cover other elements
-    [OSD_RSSI_VALUE]              = osdElementRssi,
+    [OSD_RSSI1_VALUE]              = osdElementRssi1,
+    [OSD_RSSI2_VALUE]              = osdElementRssi2,
     [OSD_MAIN_BATT_VOLTAGE]       = osdElementMainBatteryVoltage,
     [OSD_CROSSHAIRS]              = NULL,  // only has background
 #ifdef USE_ACC
@@ -1899,12 +1914,16 @@ void osdUpdateAlarms(void)
 
     int32_t alt = osdGetMetersToSelectedUnit(getEstimatedAltitudeCm()) / 100;
 
-    if (getRssiPercent() < osdConfig()->rssi_alarm) {
-        SET_BLINK(OSD_RSSI_VALUE);
+    if (getRssi1Percent() < osdConfig()->rssi_alarm) {
+        SET_BLINK(OSD_RSSI1_VALUE);
     } else {
-        CLR_BLINK(OSD_RSSI_VALUE);
+        CLR_BLINK(OSD_RSSI1_VALUE);
     }
-
+    if (getRssi2Percent() < osdConfig()->rssi_alarm) {
+        SET_BLINK(OSD_RSSI2_VALUE);
+    } else {
+        CLR_BLINK(OSD_RSSI2_VALUE);
+    }
 #ifdef USE_RX_LINK_QUALITY_INFO
     if (rxGetLinkQualityPercent() < osdConfig()->link_quality_alarm) {
         SET_BLINK(OSD_LINK_QUALITY);

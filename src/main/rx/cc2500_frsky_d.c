@@ -129,7 +129,7 @@ static void buildTelemetryFrame(uint8_t *packet)
         a1Value = (getBatteryVoltage() / 5) & 0xff;
         break;
     }
-    const uint8_t a2Value = (adcGetChannel(ADC_RSSI)) >> 4;
+    const uint8_t a2Value = (adcGetChannel(ADC_RSSI1)) >> 4;
     telemetryId = packet[4];
     frame[0] = 0x11; // length
     frame[1] = rxCc2500SpiConfig()->bindTxId[0];

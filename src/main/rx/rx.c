@@ -71,7 +71,8 @@
 
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
-static uint16_t rssi = 0;                  // range: [0;1023]
+static uint16_t rssi1 = 0;                  // range: [0;1023]
+static uint16_t rssi2 = 0;  
 static int16_t rssiDbm = CRSF_RSSI_MIN;    // range: [-130,20]
 static timeUs_t lastMspRssiUpdateUs = 0;
 
@@ -345,7 +346,7 @@ void rxInit(void)
 
 #if defined(USE_ADC)
     if (featureIsEnabled(FEATURE_RSSI_ADC)) {
-        rssiSource = RSSI_SOURCE_ADC;
+        rssiSource = RSSI1_SOURCE_ADC;
     } else
 #endif
     if (rxConfig()->rssi_channel > 0) {
@@ -692,15 +693,23 @@ void parseRcChannels(const char *input, rxConfig_t *rxConfig)
     }
 }
 
-void setRssiDirect(uint16_t newRssi, rssiSource_e source)
+void setRssi1Direct(uint16_t newRssi, rssiSource_e source)
 {
     if (source != rssiSource) {
         return;
     }
 
-    rssi = newRssi;
+    rssi1 = newRssi;
 }
 
+void setRssi2Direct(uint16_t newRssi, rssiSource_e source)
+{
+    if (source != rssiSource) {
+        return;
+    }
+
+    rssi2 = newRssi;
+}
 #define RSSI_SAMPLE_COUNT 16
 
 static uint16_t updateRssiSamples(uint16_t value)
@@ -715,7 +724,7 @@ static uint16_t updateRssiSamples(uint16_t value)
     return sum / RSSI_SAMPLE_COUNT;
 }
 
-void setRssi(uint16_t rssiValue, rssiSource_e source)
+void setRssi1(uint16_t rssiValue, rssiSource_e source)
 {
     if (source != rssiSource) {
         return;
@@ -723,10 +732,24 @@ void setRssi(uint16_t rssiValue, rssiSource_e source)
 
     // Filter RSSI value
     if (source == RSSI_SOURCE_FRAME_ERRORS) {
-        rssi = pt1FilterApply(&frameErrFilter, rssiValue);
+        rssi1 = pt1FilterApply(&frameErrFilter, rssiValue);
     } else {
         // calculate new sample mean
-        rssi = updateRssiSamples(rssiValue);
+        rssi1 = updateRssiSamples(rssiValue);
+    }
+}
+void setRssi2(uint16_t rssiValue, rssiSource_e source)
+{
+    if (source != rssiSource) {
+        return;
+    }
+
+    // Filter RSSI value
+    if (source == RSSI_SOURCE_FRAME_ERRORS) {
+        rssi2 = pt1FilterApply(&frameErrFilter, rssiValue);
+    } else {
+        // calculate new sample mean
+        rssi2 = updateRssiSamples(rssiValue);
     }
 }
 
@@ -737,7 +760,7 @@ void setRssiMsp(uint8_t newMspRssi)
     }
 
     if (rssiSource == RSSI_SOURCE_MSP) {
-        rssi = ((uint16_t)newMspRssi) << 2;
+        rssi1 = ((uint16_t)newMspRssi) << 2;
         lastMspRssiUpdateUs = micros();
     }
 }
@@ -763,10 +786,14 @@ static void updateRSSIADC(timeUs_t currentTimeUs)
     }
     rssiUpdateAt = currentTimeUs + DELAY_50_HZ;
 
-    const uint16_t adcRssiSample = adcGetChannel(ADC_RSSI);
-    uint16_t rssiValue = adcRssiSample / RSSI_ADC_DIVISOR;
+    const uint16_t adcRssiSample1 = adcGetChannel(ADC_RSSI1);
+    const uint16_t adcRssiSample2 = adcGetChannel(ADC_RSSI2);
+    
+    uint16_t rssiValue1 = adcRssiSample1 / RSSI_ADC_DIVISOR;
+    uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
 
-    setRssi(rssiValue, RSSI_SOURCE_ADC);
+    setRssi1(rssiValue1, RSSI1_SOURCE_ADC);
+    setRssi2(rssiValue2, RSSI2_SOURCE_ADC);
 #endif
 }
 
@@ -776,7 +803,7 @@ void updateRSSI(timeUs_t currentTimeUs)
     case RSSI_SOURCE_RX_CHANNEL:
         updateRSSIPWM();
         break;
-    case RSSI_SOURCE_ADC:
+    case RSSI1_SOURCE_ADC:
         updateRSSIADC(currentTimeUs);
         break;
     case RSSI_SOURCE_MSP:
@@ -789,9 +816,20 @@ void updateRSSI(timeUs_t currentTimeUs)
     }
 }
 
-uint16_t getRssi(void)
+uint16_t getRssi1(void)
 {
-    uint16_t rssiValue = rssi;
+    uint16_t rssiValue = rssi1;
+
+    // RSSI_Invert option
+    if (rxConfig()->rssi_invert) {
+        rssiValue = RSSI_MAX_VALUE - rssiValue;
+    }
+
+    return rxConfig()->rssi_scale / 100.0f * rssiValue + rxConfig()->rssi_offset * RSSI_OFFSET_SCALING;
+}
+uint16_t getRssi2(void)
+{
+    uint16_t rssiValue = rssi2;
 
     // RSSI_Invert option
     if (rxConfig()->rssi_invert) {
@@ -801,11 +839,14 @@ uint16_t getRssi(void)
     return rxConfig()->rssi_scale / 100.0f * rssiValue + rxConfig()->rssi_offset * RSSI_OFFSET_SCALING;
 }
 
-uint8_t getRssiPercent(void)
+uint8_t getRssi1Percent(void)
 {
-    return scaleRange(getRssi(), 0, RSSI_MAX_VALUE, 0, 100);
+    return scaleRange(getRssi1(), 0, RSSI_MAX_VALUE, 0, 100);
 }
-
+uint8_t getRssi2Percent(void)
+{
+    return scaleRange(getRssi2(), 0, RSSI_MAX_VALUE, 0, 100);
+}
 int16_t getRssiDbm(void)
 {
     return rssiDbm;

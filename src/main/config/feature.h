@@ -43,6 +43,7 @@ typedef enum {
     FEATURE_RX_PARALLEL_PWM = 1 << 13,
     FEATURE_RX_MSP = 1 << 14,
     FEATURE_RSSI_ADC = 1 << 15,
+    //FEATURE_RSSI2_ADC = 1 << 26,
     FEATURE_LED_STRIP = 1 << 16,
     FEATURE_DASHBOARD = 1 << 17,
     FEATURE_OSD = 1 << 18,

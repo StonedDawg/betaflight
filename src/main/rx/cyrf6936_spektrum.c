@@ -431,7 +431,7 @@ static void dsmSendTelemetryPacket(void)
     packet[5] = voltage & 0xFF;
     packet[6] = 0x7F; //temperature
     packet[7] = 0xFF; //temperature
-    packet[8] = getRssiPercent();
+    packet[8] = getRssi1Percent();
     cyrf6936SetMode(CYRF6936_MODE_IDLE, true);
     cyrf6936SendLen(packet, 9);
 }
