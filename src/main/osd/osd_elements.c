@@ -1145,21 +1145,21 @@ static void osdElementRemainingTimeEstimate(osdElementParms_t *element)
 
 static void osdElementRssi1(osdElementParms_t *element)
 {
-    uint16_t osdRssi = getRssi1() * 100 / 1024; // change range
-    if (osdRssi >= 100) {
-        osdRssi = 99;
+    uint16_t osdRssi1 = getRssi1() * 100 / 1024; // change range
+    if (osdRssi1 >= 100) {
+        osdRssi1 = 99;
     }
 
-    tfp_sprintf(element->buff, "%c%2d", SYM_RSSI, osdRssi);
+    tfp_sprintf(element->buff, "%c%2d", SYM_RSSI, osdRssi1);
 }
 static void osdElementRssi2(osdElementParms_t *element)
 {
-    uint16_t osdRssi = getRssi2() * 100 / 1024; // change range
-    if (osdRssi >= 100) {
-        osdRssi = 99;
+    uint16_t osdRssi2 = getRssi2() * 100 / 1024; // change range
+    if (osdRssi2 >= 100) {
+        osdRssi2 = 99;
     }
 
-    tfp_sprintf(element->buff, "%c%2d", SYM_RSSI, osdRssi);
+    tfp_sprintf(element->buff, "%c%2d", SYM_RSSI, osdRssi2);
 }
 #ifdef USE_RTC_TIME
 static void osdElementRtcTime(osdElementParms_t *element)
