@@ -728,18 +728,28 @@ void setRssi2Direct(uint16_t newRssi, rssiSource_e source)
 }
 #define RSSI_SAMPLE_COUNT 16
 
-static uint16_t updateRssiSamples(uint16_t value)
+static uint16_t updateRssi1Samples(uint16_t value)
 {
-    static uint16_t samples[RSSI_SAMPLE_COUNT];
-    static uint8_t sampleIndex = 0;
-    static unsigned sum = 0;
+    static uint16_t samples1[RSSI_SAMPLE_COUNT];
+    static uint8_t sample1Index = 0;
+    static unsigned sum1 = 0;
 
-    sum += value - samples[sampleIndex];
-    samples[sampleIndex] = value;
-    sampleIndex = (sampleIndex + 1) % RSSI_SAMPLE_COUNT;
-    return sum / RSSI_SAMPLE_COUNT;
+    sum1 += value - samples1[sample1Index];
+    samples1[sample1Index] = value;
+    sample1Index = (sample1Index + 1) % RSSI_SAMPLE_COUNT;
+    return sum1 / RSSI_SAMPLE_COUNT;
 }
+static uint16_t updateRssi2Samples(uint16_t value)
+{
+    static uint16_t samples2[RSSI_SAMPLE_COUNT];
+    static uint8_t sample2Index = 0;
+    static unsigned sum2 = 0;
 
+    sum2 += value - samples2[sample2Index];
+    samples2[sample2Index] = value;
+    sample2Index = (sample2Index + 1) % RSSI_SAMPLE_COUNT;
+    return sum2 / RSSI_SAMPLE_COUNT;
+}
 void setRssi1(uint16_t rssiValue, rssiSource_e source)
 {
     if (source != rssi1Source) {
@@ -751,7 +761,7 @@ void setRssi1(uint16_t rssiValue, rssiSource_e source)
         rssi1 = pt1FilterApply(&frameErrFilter, rssiValue);
     } else {
         // calculate new sample mean
-        rssi1 = updateRssiSamples(rssiValue);
+        rssi1 = updateRssi1Samples(rssiValue);
     }
 }
 void setRssi2(uint16_t rssiValue, rssiSource_e source)
@@ -765,7 +775,7 @@ void setRssi2(uint16_t rssiValue, rssiSource_e source)
         rssi2 = pt1FilterApply(&frameErrFilter, rssiValue);
     } else {
         // calculate new sample mean
-        rssi2 = updateRssiSamples(rssiValue);
+        rssi2 = updateRssi2Samples(rssiValue);
     }
 }
 
