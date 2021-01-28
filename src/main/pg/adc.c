@@ -66,12 +66,14 @@ void pgResetFn_adcConfig(adcConfig_t *adcConfig)
     adcConfig->current.ioTag = IO_TAG(CURRENT_METER_ADC_PIN);
 #endif
 
-
+#ifdef RSSI1_ADC_PIN
     adcConfig->rssi1.enabled = true;
     adcConfig->rssi1.ioTag = IO_TAG(RSSI1_ADC_PIN);
+#endif
+    #ifdef RSSI1_ADC_PIN
     adcConfig->rssi2.enabled = true;
     adcConfig->rssi2.ioTag = IO_TAG(RSSI2_ADC_PIN);
-
+#endif
 
     adcConfig->vrefIntCalibration = 0;
     adcConfig->tempSensorCalibration1 = 0;

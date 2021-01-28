@@ -347,8 +347,8 @@ void rxInit(void)
 
 #if defined(USE_ADC)
     if (featureIsEnabled(FEATURE_RSSI_ADC)) {
-        rssi1Source = RSSI1_SOURCE_ADC;
-        rssi2Source = RSSI2_SOURCE_ADC;
+        rssi1Source = RSSI_SOURCE_ADC;
+        rssi2Source = RSSI_SOURCE_ADC;
     } else
 #endif
     if (rxConfig()->rssi_channel > 0) {
@@ -416,8 +416,10 @@ void rxSetRfMode(uint8_t rfModeValue)
 
 static void setLinkQuality(bool validFrame, timeDelta_t currentDeltaTimeUs)
 {
-    static uint16_t rssiSum = 0;
-    static uint16_t rssiCount = 0;
+    static uint16_t rssi1Sum = 0;
+    static uint16_t rssi1Count = 0;
+    static uint16_t rssi2Sum = 0;
+    static uint16_t rssi2Count = 0;
     static timeDelta_t resampleTimeUs = 0;
 
 #ifdef USE_RX_LINK_QUALITY_INFO
@@ -429,13 +431,25 @@ static void setLinkQuality(bool validFrame, timeDelta_t currentDeltaTimeUs)
 
     if (rssi1Source == RSSI_SOURCE_FRAME_ERRORS) {
         resampleTimeUs += currentDeltaTimeUs;
-        rssiSum += validFrame ? RSSI_MAX_VALUE : 0;
-        rssiCount++;
+        rssi1Sum += validFrame ? RSSI_MAX_VALUE : 0;
+        rssi1Count++;
 
         if (resampleTimeUs >= FRAME_ERR_RESAMPLE_US) {
-            setRssi1(rssiSum / rssiCount, rssi1Source);
-            rssiSum = 0;
-            rssiCount = 0;
+            setRssi1(rssi1Sum / rssi1Count, rssi1Source);
+            rssi1Sum = 0;
+            rssi1Count = 0;
+            resampleTimeUs -= FRAME_ERR_RESAMPLE_US;
+        }
+    }
+    if (rssi2Source == RSSI_SOURCE_FRAME_ERRORS) {
+        resampleTimeUs += currentDeltaTimeUs;
+        rssi2Sum += validFrame ? RSSI_MAX_VALUE : 0;
+        rssi2Count++;
+
+        if (resampleTimeUs >= FRAME_ERR_RESAMPLE_US) {
+            setRssi2(rssi2Sum / rssi2Count, rssi2Source);
+            rssi2Sum = 0;
+            rssi2Count = 0;
             resampleTimeUs -= FRAME_ERR_RESAMPLE_US;
         }
     }
@@ -805,7 +819,7 @@ void updateRSSI(timeUs_t currentTimeUs)
     case RSSI_SOURCE_RX_CHANNEL:
         updateRSSIPWM();
         break;
-    case RSSI1_SOURCE_ADC:
+    case RSSI_SOURCE_ADC:
         updateRSSIADC(currentTimeUs);
         break;
     case RSSI_SOURCE_MSP:
@@ -820,12 +834,12 @@ void updateRSSI(timeUs_t currentTimeUs)
     case RSSI_SOURCE_RX_CHANNEL:
         updateRSSIPWM();
         break;
-    case RSSI2_SOURCE_ADC:
+    case RSSI_SOURCE_ADC:
         updateRSSIADC(currentTimeUs);
         break;
     case RSSI_SOURCE_MSP:
         if (cmpTimeUs(micros(), lastMspRssiUpdateUs) > MSP_RSSI_TIMEOUT_US) {
-            rssi1 = 0;
+            rssi2 = 0;
         }
         break;
     default:
@@ -835,25 +849,25 @@ void updateRSSI(timeUs_t currentTimeUs)
 
 uint16_t getRssi1(void)
 {
-    uint16_t rssiValue = rssi1;
+    uint16_t rssiValue1 = rssi1;
 
     // RSSI_Invert option
     if (rxConfig()->rssi_invert) {
-        rssiValue = RSSI_MAX_VALUE - rssiValue;
+        rssiValue1 = RSSI_MAX_VALUE - rssiValue1;
     }
 
-    return rxConfig()->rssi_scale / 100.0f * rssiValue + rxConfig()->rssi_offset * RSSI_OFFSET_SCALING;
+    return rxConfig()->rssi_scale / 100.0f * rssiValue1 + rxConfig()->rssi_offset * RSSI_OFFSET_SCALING;
 }
 uint16_t getRssi2(void)
 {
-    uint16_t rssiValue = rssi2;
+    uint16_t rssiValue2 = rssi2;
 
     // RSSI_Invert option
     if (rxConfig()->rssi_invert) {
-        rssiValue = RSSI_MAX_VALUE - rssiValue;
+        rssiValue2 = RSSI_MAX_VALUE - rssiValue2;
     }
 
-    return rxConfig()->rssi_scale / 100.0f * rssiValue + rxConfig()->rssi_offset * RSSI_OFFSET_SCALING;
+    return rxConfig()->rssi_scale / 100.0f * rssiValue2 + rxConfig()->rssi_offset * RSSI_OFFSET_SCALING;
 }
 
 uint8_t getRssi1Percent(void)
@@ -925,7 +939,12 @@ uint16_t rxGetRefreshRate(void)
 
 bool isRssiConfigured(void)
 {
-    return rssi1Source != RSSI_SOURCE_NONE;
+    if(rssi1Source != RSSI_SOURCE_NONE && rssi2Source != RSSI_SOURCE_NONE){
+
+    return 1;
+    } else {
+        return 0;
+    }
 }
 
 timeDelta_t rxGetFrameDelta(timeDelta_t *frameAgeUs)

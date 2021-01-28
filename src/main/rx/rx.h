@@ -151,8 +151,7 @@ typedef struct rxRuntimeState_s {
 
 typedef enum {
     RSSI_SOURCE_NONE = 0,
-    RSSI1_SOURCE_ADC,
-    RSSI2_SOURCE_ADC,
+    RSSI_SOURCE_ADC,
     RSSI_SOURCE_RX_CHANNEL,
     RSSI_SOURCE_RX_PROTOCOL,
     RSSI_SOURCE_MSP,
