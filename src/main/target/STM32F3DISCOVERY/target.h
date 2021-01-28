@@ -176,7 +176,7 @@
 #define ADC_INSTANCE            ADC1
 #define VBAT_ADC_PIN            PC0
 #define CURRENT_METER_ADC_PIN   PC1
-#define RSSI_ADC_PIN            PC2
+#define RSSI1_ADC_PIN            PC2
 #define EXTERNAL1_ADC_PIN       PC3
 
 #define USE_RANGEFINDER

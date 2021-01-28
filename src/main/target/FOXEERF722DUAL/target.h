@@ -127,7 +127,7 @@
 
 #define VBAT_ADC_PIN                        PC0
 #define CURRENT_METER_ADC_PIN               PC2
-#define RSSI_ADC_PIN                        PA0
+#define RSSI1_ADC_PIN                        PA0
 
 #define DEFAULT_VOLTAGE_METER_SOURCE VOLTAGE_METER_ADC
 #define DEFAULT_CURRENT_METER_SOURCE CURRENT_METER_ADC

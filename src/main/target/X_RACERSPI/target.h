@@ -104,7 +104,7 @@
 #define ADC_INSTANCE            ADC2
 #define VBAT_ADC_PIN            PA4
 #define CURRENT_METER_ADC_PIN   PA5
-#define RSSI_ADC_PIN            PB2
+#define RSSI1_ADC_PIN            PB2
 
 #define REMAP_TIM17_DMA
 // UART1 TX uses DMA1_Channel4, which is also used by dshot on motor 4

@@ -327,7 +327,7 @@
 #endif
 
 #if defined(AIRBOTF4SD)
-#define RSSI_ADC_PIN            PA0
+#define RSSI1_ADC_PIN            PA0
 #endif
 
 #define USE_TRANSPONDER

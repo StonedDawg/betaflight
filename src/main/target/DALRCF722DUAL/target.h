@@ -128,7 +128,7 @@
 
 #define VBAT_ADC_PIN                        PC1
 #define CURRENT_METER_ADC_PIN               PC0
-#define RSSI_ADC_PIN                        PA0
+#define RSSI1_ADC_PIN                        PA0
 
 #define CURRENT_METER_SCALE_DEFAULT         166
 #define VBAT_SCALE_DEFAULT          160

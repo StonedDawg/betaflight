@@ -182,7 +182,7 @@
 #define ADC2_INSTANCE               ADC2
 #define ADC3_INSTANCE               ADC3
 
-#define RSSI_ADC_PIN                PC4
+#define RSSI1_ADC_PIN                PC4
 #define VBAT_ADC_PIN                PC1
 #define CURRENT_METER_ADC_PIN       PC0
 

@@ -96,7 +96,7 @@
 #define ADC_INSTANCE                ADC2
 #define VBAT_ADC_PIN                PA4
 #define CURRENT_METER_ADC_PIN       PA5
-#define RSSI_ADC_PIN                PB2
+#define RSSI1_ADC_PIN                PB2
 
 #define DEFAULT_RX_FEATURE      FEATURE_RX_PPM
 

@@ -100,7 +100,7 @@
 #define USE_ADC
 #define CURRENT_METER_ADC_PIN   PA7
 #define VBAT_ADC_PIN            PA6
-#define RSSI_ADC_PIN            PA5
+#define RSSI1_ADC_PIN            PA5
 
 #define TARGET_IO_PORTA         0xffff
 #define TARGET_IO_PORTB         0xffff

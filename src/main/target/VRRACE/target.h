@@ -144,7 +144,7 @@
 #define USE_ADC
 #define DEFAULT_VOLTAGE_METER_SOURCE VOLTAGE_METER_ADC
 #define VBAT_ADC_PIN                PC0
-#define RSSI_ADC_PIN                PB1
+#define RSSI1_ADC_PIN                PB1
 #define CURRENT_METER_ADC_PIN       PA5
 
 #undef USE_LED_STRIP

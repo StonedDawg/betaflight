@@ -209,7 +209,7 @@
 #define ADC1_DMA_OPT            1  // DMA 2 Stream 4 Channel 0 (compat default)
 #define CURRENT_METER_ADC_PIN   PC2
 #define VBAT_ADC_PIN            PC3
-#define RSSI_ADC_PIN            PC5
+#define RSSI1_ADC_PIN            PC5
 
 // Additional sensors ----------------------
 #define USE_RANGEFINDER

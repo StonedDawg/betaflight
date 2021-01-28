@@ -79,7 +79,7 @@
 #define ADC_INSTANCE            ADC2
 #define VBAT_ADC_PIN            PA4
 #define CURRENT_METER_ADC_PIN   PA5
-#define RSSI_ADC_PIN            PB2
+#define RSSI1_ADC_PIN            PB2
 
 // IO - stm32f303cc in 48pin package
 #define TARGET_IO_PORTA     0xffff

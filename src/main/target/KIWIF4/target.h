@@ -148,7 +148,7 @@
 #define USE_ADC
 #define DEFAULT_VOLTAGE_METER_SOURCE VOLTAGE_METER_ADC
 #define VBAT_ADC_PIN            PC1
-#define RSSI_ADC_PIN            PC2
+#define RSSI1_ADC_PIN            PC2
 #define CURRENT_METER_ADC_PIN   PC3
 
 #define CURRENT_METER_SCALE_DEFAULT 444

@@ -120,7 +120,7 @@
 
 #define VBAT_ADC_PIN            PA0
 #define CURRENT_METER_ADC_PIN   PA1
-#define RSSI_ADC_PIN            PB1
+#define RSSI1_ADC_PIN            PB1
 //#define EXTERNAL1_ADC_PIN       PA4
 
 #define USE_ESCSERIAL

@@ -148,7 +148,7 @@
 #define USE_ADC
 #define CURRENT_METER_ADC_PIN   PC1
 #define VBAT_ADC_PIN            PC0
-#define RSSI_ADC_PIN            PC4
+#define RSSI1_ADC_PIN            PC4
 #define EXTERNAL1_ADC_PIN       PA0
 
 #define USE_TRANSPONDER

@@ -112,7 +112,7 @@
 #define ADC24_DMA_REMAP
 #define VBAT_ADC_PIN            PA4
 #define CURRENT_METER_ADC_PIN   PA5
-#define RSSI_ADC_PIN            PB2
+#define RSSI1_ADC_PIN            PB2
 
 #define CURRENT_METER_SCALE_DEFAULT 220
 

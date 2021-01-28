@@ -134,7 +134,7 @@
 
 #define CURRENT_METER_ADC_PIN   PC1
 
-#define RSSI_ADC_PIN            PC2
+#define RSSI1_ADC_PIN            PC2
 
 #define USE_TRANSPONDER
 

@@ -123,7 +123,7 @@
 #define ADC2_DMA_OPT            1
 #define CURRENT_METER_ADC_PIN   PC0  
 #define VBAT_ADC_PIN			PC1
-#define RSSI_ADC_PIN			PC2
+#define RSSI1_ADC_PIN			PC2
 
 //---------------------------------VTX&&CAM------------------------------------
 #define USE_PINIO

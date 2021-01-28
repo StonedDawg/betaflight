@@ -118,7 +118,7 @@
 #define ADC3_DMA_OPT            0
 
 #define VBAT_ADC_PIN            PC1
-#define RSSI_ADC_PIN            PC2
+#define RSSI1_ADC_PIN            PC2
 #define CURRENT_METER_ADC_PIN   PC3
 
 // ******* OSD ********

@@ -121,7 +121,7 @@
 #define ADC3_DMA_OPT            0
 #define VBAT_ADC_PIN            PC0
 #define CURRENT_METER_ADC_PIN   PC1
-#define RSSI_ADC_PIN            PC2
+#define RSSI1_ADC_PIN            PC2
 
 #define DEFAULT_FEATURES        (FEATURE_OSD | FEATURE_TELEMETRY | FEATURE_AIRMODE)
 #define DEFAULT_VOLTAGE_METER_SOURCE    VOLTAGE_METER_ADC

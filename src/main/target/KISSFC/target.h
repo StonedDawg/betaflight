@@ -95,7 +95,7 @@
 #define ADC_INSTANCE            ADC1
 #define VBAT_ADC_PIN            PA0
 #define CURRENT_METER_ADC_PIN   PA2
-//#define RSSI_ADC_PIN            PB2
+//#define RSSI1_ADC_PIN            PB2
 
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
 #define SERIALRX_PROVIDER       SERIALRX_SBUS

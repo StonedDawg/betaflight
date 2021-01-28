@@ -172,7 +172,7 @@
 #define ADC1_DMA_OPT            1  // DMA 2 Stream 4 Channel 0 (compat default)
 #define VBAT_ADC_PIN            PC0  // 11:1 (10K + 1K) divider
 #define CURRENT_METER_ADC_PIN   PC1
-#define RSSI_ADC_PIN            PC4
+#define RSSI1_ADC_PIN            PC4
 #define EXTERNAL1_ADC_PIN       PA4
 
 #define USE_TRANSPONDER

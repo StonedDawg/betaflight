@@ -136,7 +136,7 @@
 #define CURRENT_METER_ADC_PIN       PA1
 #define ADC_INSTANCE                ADC1
 
-//#define RSSI_ADC_PIN                PB1
+//#define RSSI1_ADC_PIN                PB1
 //#define ADC_INSTANCE                ADC3
 
 #define USE_TRANSPONDER

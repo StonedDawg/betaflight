@@ -415,7 +415,7 @@ static void validateAndFixConfig(void)
     adcConfigMutable()->vbat.enabled = (batteryConfig()->voltageMeterSource == VOLTAGE_METER_ADC);
     adcConfigMutable()->current.enabled = (batteryConfig()->currentMeterSource == CURRENT_METER_ADC);
 
-    // The FrSky D SPI RX sends RSSI_ADC_PIN (if configured) as A2
+    // The FrSky D SPI RX sends RSSI1_ADC_PIN (if configured) as A2
     adcConfigMutable()->rssi1.enabled = featureIsEnabled(FEATURE_RSSI_ADC);
     adcConfigMutable()->rssi2.enabled = featureIsEnabled(FEATURE_RSSI_ADC);
 #ifdef USE_RX_SPI

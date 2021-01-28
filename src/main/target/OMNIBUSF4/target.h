@@ -267,11 +267,11 @@
 #define CURRENT_METER_ADC_PIN   PC1  // Direct from CRNT pad (part of onboard sensor for Pro)
 #define VBAT_ADC_PIN            PC2  // 11:1 (10K + 1K) divider
 #ifdef DYSF4PRO
-#define RSSI_ADC_PIN            PC3  // Direct from RSSI pad
+#define RSSI1_ADC_PIN            PC3  // Direct from RSSI pad
 #elif defined(OMNIBUSF4BASE)
-#define RSSI_ADC_PIN            NONE
+#define RSSI1_ADC_PIN            NONE
 #else
-#define RSSI_ADC_PIN            PA0  // Direct from RSSI pad
+#define RSSI1_ADC_PIN            PA0  // Direct from RSSI pad
 #endif
 
 #define USE_TRANSPONDER

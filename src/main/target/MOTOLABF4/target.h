@@ -130,7 +130,7 @@
 #define VBAT_ADC_PIN            PC0
 #define CURRENT_METER_ADC_PIN   PC1
 // Reserved pins, not connected
-//#define RSSI_ADC_PIN            PC2
+//#define RSSI1_ADC_PIN            PC2
 
 #define ENABLE_BLACKBOX_LOGGING_ON_SDCARD_BY_DEFAULT
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
