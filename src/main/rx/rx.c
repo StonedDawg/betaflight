@@ -848,7 +848,7 @@ void updateRSSI(timeUs_t currentTimeUs)
 {
 
         updateRSSI1ADC(currentTimeUs);
-        updateRSSI1ADC(currentTimeUs);
+        updateRSSI2ADC(currentTimeUs);
         
 }
 
