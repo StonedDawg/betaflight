@@ -29,7 +29,7 @@
 #endif
 
 #define LED0_PIN                PB5
-//#define LED1_PIN                PB4
+#define LED1_PIN                PB4
 
 #define USE_BEEPER
 #define BEEPER_PIN              PA8
@@ -146,7 +146,7 @@
 #define DEFAULT_VOLTAGE_METER_SOURCE VOLTAGE_METER_ADC
 #define VBAT_ADC_PIN            PC1
 #define RSSI1_ADC_PIN           PC2
-#define RSSI2_ADC_PIN           PB4
+#define RSSI2_ADC_PIN           PA0
 
 //#define CURRENT_METER_ADC_PIN   PC3
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
@@ -158,5 +158,5 @@
 #define TARGET_IO_PORTC         0xffff
 #define TARGET_IO_PORTD         (BIT(2))
 
-#define USABLE_TIMER_CHANNEL_COUNT 7
-#define USED_TIMERS             ( TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(5) | TIM_N(8) | TIM_N(11) )
+#define USABLE_TIMER_CHANNEL_COUNT 6
+#define USED_TIMERS             ( TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(8) | TIM_N(11) )
