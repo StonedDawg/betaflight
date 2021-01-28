@@ -209,7 +209,7 @@ bool sbusInit(const rxConfig_t *rxConfig, rxRuntimeState_t *rxRuntimeState)
         );
 
     if (rxConfig->rssi_src_frame_errors) {
-        rssiSource = RSSI_SOURCE_FRAME_ERRORS;
+        rssi1Source = RSSI_SOURCE_FRAME_ERRORS;
     }
 
 #ifdef USE_TELEMETRY

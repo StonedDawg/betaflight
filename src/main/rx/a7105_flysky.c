@@ -394,8 +394,8 @@ bool flySkyInit(const rxSpiConfig_t *rxSpiConfig, struct rxRuntimeState_s *rxRun
         startRxChannel = getNextChannel(0);
     }
 
-    if (rssiSource == RSSI_SOURCE_NONE) {
-        rssiSource = RSSI_SOURCE_RX_PROTOCOL;
+    if (rssi1Source == RSSI_SOURCE_NONE) {
+        rssi1Source = RSSI_SOURCE_RX_PROTOCOL;
     }
 
     A7105WriteReg(A7105_0F_CHANNEL, startRxChannel);

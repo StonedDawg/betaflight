@@ -478,8 +478,8 @@ bool frSkySpiInit(const rxSpiConfig_t *rxSpiConfig, rxRuntimeState_t *rxRuntimeS
     }
 
 #if defined(USE_RX_FRSKY_SPI_TELEMETRY)
-    if (rssiSource == RSSI_SOURCE_NONE) {
-        rssiSource = RSSI_SOURCE_RX_PROTOCOL;
+    if (rssi1Source == RSSI_SOURCE_NONE) {
+        rssi1Source = RSSI_SOURCE_RX_PROTOCOL;
     }
 #endif
 

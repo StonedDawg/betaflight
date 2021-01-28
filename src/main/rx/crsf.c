@@ -157,7 +157,7 @@ static void handleCrsfLinkStatisticsFrame(const crsfLinkStatistics_t* statsPtr, 
     const crsfLinkStatistics_t stats = *statsPtr;
     lastLinkStatisticsFrameUs = currentTimeUs;
     int16_t rssiDbm = -1 * (stats.active_antenna ? stats.uplink_RSSI_2 : stats.uplink_RSSI_1);
-    if (rssiSource == RSSI_SOURCE_RX_PROTOCOL_CRSF) {
+    if (rssi1Source == RSSI_SOURCE_RX_PROTOCOL_CRSF) {
         const uint16_t rssiPercentScaled = scaleRange(rssiDbm, CRSF_RSSI_MIN, 0, 0, RSSI_MAX_VALUE);
         setRssi1(rssiPercentScaled, RSSI_SOURCE_RX_PROTOCOL_CRSF);
     }
@@ -201,7 +201,7 @@ static void handleCrsfLinkStatisticsFrame(const crsfLinkStatistics_t* statsPtr, 
 static void crsfCheckRssi(uint32_t currentTimeUs) {
 
     if (cmpTimeUs(currentTimeUs, lastLinkStatisticsFrameUs) > CRSF_LINK_STATUS_UPDATE_TIMEOUT_US) {
-        if (rssiSource == RSSI_SOURCE_RX_PROTOCOL_CRSF) {
+        if (rssi1Source == RSSI_SOURCE_RX_PROTOCOL_CRSF) {
             setRssi1Direct(0, RSSI_SOURCE_RX_PROTOCOL_CRSF);
 #ifdef USE_RX_RSSI_DBM
             if (rxConfig()->crsf_use_rx_snr) {
@@ -295,7 +295,7 @@ STATIC_UNIT_TESTED void crsfDataReceive(uint16_t c, void *data)
 
                     case CRSF_FRAMETYPE_LINK_STATISTICS: {
                          // if to FC and 10 bytes + CRSF_FRAME_ORIGIN_DEST_SIZE
-                         if ((rssiSource == RSSI_SOURCE_RX_PROTOCOL_CRSF) &&
+                         if ((rssi1Source == RSSI_SOURCE_RX_PROTOCOL_CRSF) &&
                              (crsfFrame.frame.deviceAddress == CRSF_ADDRESS_FLIGHT_CONTROLLER) &&
                              (crsfFrame.frame.frameLength == CRSF_FRAME_ORIGIN_DEST_SIZE + CRSF_FRAME_LINK_STATISTICS_PAYLOAD_SIZE)) {
                              const crsfLinkStatistics_t* statsFrame = (const crsfLinkStatistics_t*)&crsfFrame.frame.payload;
@@ -407,8 +407,8 @@ bool crsfRxInit(const rxConfig_t *rxConfig, rxRuntimeState_t *rxRuntimeState)
         CRSF_PORT_OPTIONS | (rxConfig->serialrx_inverted ? SERIAL_INVERTED : 0)
         );
 
-        if (rssiSource == RSSI_SOURCE_NONE) {
-            rssiSource = RSSI_SOURCE_RX_PROTOCOL_CRSF;
+        if (rssi1Source == RSSI_SOURCE_NONE) {
+            rssi1Source = RSSI_SOURCE_RX_PROTOCOL_CRSF;
         }
 #ifdef USE_RX_LINK_QUALITY_INFO
         if (linkQualitySource == LQ_SOURCE_NONE) {

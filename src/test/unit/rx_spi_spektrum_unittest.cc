@@ -337,7 +337,7 @@ extern "C" {
     int16_t *debug;
     uint8_t debugMode;
 
-    rssiSource_e rssiSource;
+    rssiSource_e rssi1Source;
     void setRssi(uint16_t newRssi, rssiSource_e )
     {
         rssi = newRssi;

@@ -154,8 +154,8 @@ bool cc2500SpiInit(void)
     cc2500TxDisable();
 #endif // USE_RX_CC2500_SPI_PA_LNA
 
-    if (rssiSource == RSSI_SOURCE_NONE) {
-        rssiSource = RSSI_SOURCE_RX_PROTOCOL;
+    if (rssi1Source == RSSI_SOURCE_NONE) {
+        rssi1Source = RSSI_SOURCE_RX_PROTOCOL;
     }
 
     return true;

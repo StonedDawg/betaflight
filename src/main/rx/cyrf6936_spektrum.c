@@ -393,8 +393,8 @@ bool spektrumSpiInit(const struct rxSpiConfig_s *rxConfig, struct rxRuntimeState
         return false;
     }
 
-    if (rssiSource == RSSI_SOURCE_NONE) {
-        rssiSource = RSSI_SOURCE_RX_PROTOCOL;
+    if (rssi1Source == RSSI_SOURCE_NONE) {
+        rssi1Source = RSSI_SOURCE_RX_PROTOCOL;
     }
 
     cyrf6936SetConfigLen(cyrf6936Config, ARRAYLEN(cyrf6936Config));

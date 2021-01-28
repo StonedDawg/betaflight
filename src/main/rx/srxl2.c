@@ -527,8 +527,8 @@ bool srxl2RxInit(const rxConfig_t *rxConfig, rxRuntimeState_t *rxRuntimeState)
     state = ListenForActivity;
     timeoutTimestamp = micros() + SRXL2_LISTEN_FOR_ACTIVITY_TIMEOUT_US;
 
-    if (rssiSource == RSSI_SOURCE_NONE) {
-        rssiSource = RSSI_SOURCE_RX_PROTOCOL;
+    if (rssi1Source == RSSI_SOURCE_NONE) {
+        rssi1Source = RSSI_SOURCE_RX_PROTOCOL;
     }
 
     return (bool)serialPort;

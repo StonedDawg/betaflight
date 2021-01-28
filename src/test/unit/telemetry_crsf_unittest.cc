@@ -61,7 +61,7 @@ extern "C" {
     #include "telemetry/telemetry.h"
     #include "telemetry/msp_shared.h"
 
-    rssiSource_e rssiSource;
+    rssiSource_e rssi1Source;
     bool airMode;
 
     uint16_t testBatteryVoltage = 0;

@@ -1876,7 +1876,7 @@ static bool mspProcessOutCommand(int16_t cmdMSP, sbuf_t *dst)
 #endif
 
     case MSP_TX_INFO:
-        sbufWriteU8(dst, rssiSource);
+        sbufWriteU8(dst, rssi1Source);
         uint8_t rtcDateTimeIsSet = 0;
 #ifdef USE_RTC_TIME
         dateTime_t dt;

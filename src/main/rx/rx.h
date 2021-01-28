@@ -160,8 +160,9 @@ typedef enum {
     RSSI_SOURCE_RX_PROTOCOL_CRSF,
 } rssiSource_e;
 
-extern rssiSource_e rssiSource;
+extern rssiSource_e rssi1Source;
 
+extern rssiSource_e rssi2Source;
 typedef enum {
     LQ_SOURCE_NONE = 0,
     LQ_SOURCE_RX_PROTOCOL_CRSF,

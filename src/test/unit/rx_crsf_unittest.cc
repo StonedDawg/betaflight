@@ -41,7 +41,7 @@ extern "C" {
 
     #include "telemetry/msp_shared.h"
 
-    rssiSource_e rssiSource;
+    rssiSource_e rssi1Source;
 
     void crsfDataReceive(uint16_t c);
     uint8_t crsfFrameCRC(void);
