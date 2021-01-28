@@ -808,8 +808,8 @@ static void updateRSSIADC(timeUs_t currentTimeUs)
     uint16_t rssiValue1 = adcRssiSample1 / RSSI_ADC_DIVISOR;
     uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
 
-    setRssi1(rssiValue1, RSSI1_SOURCE_ADC);
-    setRssi2(rssiValue2, RSSI2_SOURCE_ADC);
+    setRssi1(rssiValue1, RSSI_SOURCE_ADC);
+    setRssi2(rssiValue2, RSSI_SOURCE_ADC);
 #endif
 }
 
