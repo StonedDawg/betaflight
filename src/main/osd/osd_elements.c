@@ -1614,7 +1614,8 @@ static const uint8_t osdElementDisplayOrder[] = {
     OSD_LINK_QUALITY,
 #endif
 #ifdef USE_RX_RSSI_DBM
-    OSD_RSSI_DBM_VALUE,
+    OSD_RSSI1_DBM_VALUE,
+    OSD_RSSI2_DBM_VALUE,
 #endif
 #ifdef USE_OSD_STICK_OVERLAY
     OSD_STICK_OVERLAY_LEFT,
@@ -1734,7 +1735,9 @@ const osdElementDrawFn osdElementDrawFunction[OSD_ITEM_COUNT] = {
     [OSD_PROFILE_NAME]            = osdElementOsdProfileName,
 #endif
 #ifdef USE_RX_RSSI_DBM
-    [OSD_RSSI_DBM_VALUE]          = osdElementRssiDbm,
+    [OSD_RSSI1_DBM_VALUE]          = osdElementRssi1Dbm,
+    [OSD_RSSI2_DBM_VALUE]          = osdElementRssi2Dbm,
+
 #endif
     [OSD_RC_CHANNELS]             = osdElementRcChannels,
 #ifdef USE_GPS

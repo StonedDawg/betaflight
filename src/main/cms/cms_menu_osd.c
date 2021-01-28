@@ -72,7 +72,8 @@ const OSD_Entry menuOsdActiveElemsEntries[] =
     {"RSSI1",               OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI1_VALUE], DYNAMIC},
     {"RSSI2",               OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI2_VALUE], DYNAMIC},
 #ifdef USE_RX_RSSI_DBM
-    {"RSSI DBM",           OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI_DBM_VALUE], DYNAMIC},
+    {"RSSI1 DBM",           OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI1_DBM_VALUE], DYNAMIC},
+    {"RSSI2 DBM",           OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_RSSI2_DBM_VALUE], DYNAMIC},
 #endif
     {"BATTERY VOLTAGE",    OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_MAIN_BATT_VOLTAGE], DYNAMIC},
     {"BATTERY USAGE",      OME_VISIBLE, NULL, &osdConfig_item_pos[OSD_MAIN_BATT_USAGE], DYNAMIC},

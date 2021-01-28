@@ -350,8 +350,7 @@ void rxInit(void)
     if (featureIsEnabled(FEATURE_RSSI_ADC)) {
         rssi1Source = RSSI_SOURCE_ADC;
         rssi2Source = RSSI_SOURCE_ADC;
-        rxConfig()->rssi_channel = 0;
-    } 
+        } 
 #endif
     
 
@@ -873,16 +872,16 @@ int16_t getRssi2Dbm(void)
 }
 #define RSSI_SAMPLE_COUNT_DBM 16
 
-static int16_t updateRssiDbmSamples(int16_t value)
+static int16_t updateRssi1DbmSamples(int16_t value)
 {
-    static int16_t samplesdbm[RSSI_SAMPLE_COUNT_DBM];
-    static uint8_t sampledbmIndex = 0;
-    static int sumdbm = 0;
+    static int16_t samplesdbm1[RSSI_SAMPLE_COUNT_DBM];
+    static uint8_t sampledbm1Index = 0;
+    static int sumdbm1 = 0;
 
-    sumdbm += value - samplesdbm[sampledbmIndex];
-    samplesdbm[sampledbmIndex] = value;
-    sampledbmIndex = (sampledbmIndex + 1) % RSSI_SAMPLE_COUNT_DBM;
-    return sumdbm / RSSI_SAMPLE_COUNT_DBM;
+    sumdbm1 += value - samplesdbm1[sampledbm1Index];
+    samplesdbm1[sampledbm1Index] = value;
+    sampledbm1Index = (sampledbm1Index + 1) % RSSI_SAMPLE_COUNT_DBM;
+    return sumdbm1 / RSSI_SAMPLE_COUNT_DBM;
 }
 
 void setRssi1Dbm(int16_t rssiDbmValue, rssiSource_e source)
@@ -901,6 +900,35 @@ void setRssi1DbmDirect(int16_t newRssiDbm, rssiSource_e source)
     }
 
     rssi1Dbm = newRssiDbm;
+}
+static int16_t updateRssi2DbmSamples(int16_t value)
+{
+    static int16_t samplesdbm2[RSSI_SAMPLE_COUNT_DBM];
+    static uint8_t sampledbm2Index = 0;
+    static int sumdbm2 = 0;
+
+    sumdbm2 += value - samplesdbm2[sampledbm2Index];
+    samplesdbm2[sampledbm2Index] = value;
+    sampledbm2Index = (sampledbm2Index + 1) % RSSI_SAMPLE_COUNT_DBM;
+    return sumdbm2 / RSSI_SAMPLE_COUNT_DBM;
+}
+
+void setRssi2Dbm(int16_t rssiDbmValue, rssiSource_e source)
+{
+    if (source != rssi1Source) {
+        return;
+    }
+
+    rssi2Dbm = updateRssi2DbmSamples(rssiDbmValue);
+}
+
+void setRssi2DbmDirect(int16_t newRssiDbm, rssiSource_e source)
+{
+    if (source != rssi1Source) {
+        return;
+    }
+
+    rssi2Dbm = newRssiDbm;
 }
 
 #ifdef USE_RX_LINK_QUALITY_INFO
