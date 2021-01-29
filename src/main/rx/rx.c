@@ -798,7 +798,28 @@ static void updateRSSIPWM(void)
     // Range of rawPwmRssi is [1000;2000]. rssi should be in [0;1023];
     setRssi1Direct(scaleRange(constrain(pwmRssi, PWM_RANGE_MIN, PWM_RANGE_MAX), PWM_RANGE_MIN, PWM_RANGE_MAX, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_CHANNEL);
 }
+static void updateDiversity(timeUs_t currentTimeUs)
+{
+#ifndef USE_ADC
+    UNUSED(currentTimeUs);
+#else
+    static uint32_t diversityUpdateAt1 = 0;
 
+    if ((int32_t)(currentTimeUs - diversityUpdateAt1) < 0) {
+        return;
+    }
+    diversityUpdateAt1 = currentTimeUs + DELAY_10_HZ;
+
+    const uint16_t adcRssiSample1 = adcGetChannel(ADC_RSSI1);
+    //const uint16_t adcRssiSample2 = adcGetChannel(ADC_RSSI2);
+    
+    uint16_t rssiValue1 = adcRssiSample1 / RSSI_ADC_DIVISOR;
+    //uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
+
+    setRssi1(rssiValue1, RSSI_SOURCE_ADC);
+    //setRssi2(rssiValue2, RSSI_SOURCE_ADC);
+#endif
+}
 static void updateRSSI1ADC(timeUs_t currentTimeUs)
 {
 #ifndef USE_ADC
