@@ -825,7 +825,7 @@ int32_t nextReceiver = activeReceiver;
             }
                         if (rssiDiffAbs >= RSSI_HYSTERESIS) {
                 if (currentBestReceiver == diversityTargetReceiver) {
-                    if (currentTimeUs - diversityHysteresis < 0) {
+                    if ((int32_t)(currentTimeUs - diversityHysteresis) < 0) {
                         nextReceiver = diversityTargetReceiver;
                     }
                 } else {
