@@ -151,7 +151,7 @@
 #define PG_PULLDOWN_CONFIG 552
 #define PG_MODE_ACTIVATION_CONFIG 553
 #define PG_BETAFLIGHT_END 553
-#define PG_VRX_PIN_CONFIG 554
+#define PG_VRX_PINS_CONFIG 554
 
 
 // OSD configuration (subject to change)
