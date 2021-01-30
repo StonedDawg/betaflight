@@ -28,12 +28,12 @@
 #define USBD_PRODUCT_STRING     "FuryF4"
 #endif
 
-#define LED0_PIN                PB5
-#define LED1_PIN                PB4
+//#define LED0_PIN                PB5
+//#define LED1_PIN                PB4
 
-#define USE_BEEPER
-#define BEEPER_PIN              PA8
-#define BEEPER_INVERTED
+//#define USE_BEEPER
+//#define BEEPER_PIN              PA8
+//#define BEEPER_INVERTED
 
 #define INVERTER_PIN_UART1      PC0 // PC0 used as inverter select GPIO
 
@@ -157,6 +157,8 @@
 #define TARGET_IO_PORTB         0xffff
 #define TARGET_IO_PORTC         0xffff
 #define TARGET_IO_PORTD         (BIT(2))
-
+#define VRX_DIVERSITY_SWITCH_PIN    PB5
+#define VRX_OSD_SWITCH_PIN  PB4
+#define VRX_LED_PIN PA8
 #define USABLE_TIMER_CHANNEL_COUNT 6
 #define USED_TIMERS             ( TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(8) | TIM_N(11) )

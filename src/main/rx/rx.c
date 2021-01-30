@@ -89,6 +89,7 @@ static uint8_t rfMode = 0;
 #define RSSI_ADC_DIVISOR (4096 / 1024)
 #define RSSI_OFFSET_SCALING (1024 / 100.0f)
 
+#define RSSI_HYSTERESIS 5
 rssiSource_e rssi1Source;
 rssiSource_e rssi2Source;
 linkQualitySource_e linkQualitySource;
@@ -798,27 +799,46 @@ static void updateRSSIPWM(void)
     // Range of rawPwmRssi is [1000;2000]. rssi should be in [0;1023];
     setRssi1Direct(scaleRange(constrain(pwmRssi, PWM_RANGE_MIN, PWM_RANGE_MAX), PWM_RANGE_MIN, PWM_RANGE_MAX, 0, RSSI_MAX_VALUE), RSSI_SOURCE_RX_CHANNEL);
 }
+
+int32_t activeReceiver = 0;
+int32_t diversityTargetReceiver;
+
 static void updateDiversity(timeUs_t currentTimeUs)
 {
 #ifndef USE_ADC
     UNUSED(currentTimeUs);
 #else
-    static uint32_t diversityUpdateAt1 = 0;
+int32_t nextReceiver = activeReceiver;
 
-    if ((int32_t)(currentTimeUs - diversityUpdateAt1) < 0) {
-        return;
-    }
-    diversityUpdateAt1 = currentTimeUs + DELAY_10_HZ;
-
-    const uint16_t adcRssiSample1 = adcGetChannel(ADC_RSSI1);
-    //const uint16_t adcRssiSample2 = adcGetChannel(ADC_RSSI2);
-    
-    uint16_t rssiValue1 = adcRssiSample1 / RSSI_ADC_DIVISOR;
-    //uint16_t rssiValue2 = adcRssiSample2 / RSSI_ADC_DIVISOR;
-
-    setRssi1(rssiValue1, RSSI_SOURCE_ADC);
-    //setRssi2(rssiValue2, RSSI_SOURCE_ADC);
-#endif
+//          if (!EepromSettings.quadversity) {
+            int16_t rssiDiff = (int16_t) rssi1 - (int16_t) rssi2;
+            uint16_t rssiDiffAbs = abs(rssiDiff);
+            int32_t  currentBestReceiver = activeReceiver;
+            static uint32_t diversityHysteresis = 0;
+            
+            if (rssiDiff > 0) {
+                currentBestReceiver = 0;
+            } else if (rssiDiff < 0) {
+                currentBestReceiver = 1;
+            } else {
+                currentBestReceiver = activeReceiver;
+            }
+                        if (rssiDiffAbs >= RSSI_HYSTERESIS) {
+                if (currentBestReceiver == diversityTargetReceiver) {
+                    if (currentTimeUs - diversityHysteresis < 0) {
+                        nextReceiver = diversityTargetReceiver;
+                    }
+                } else {
+                    diversityTargetReceiver = currentBestReceiver;
+                    diversityHysteresis = currentTimeUs + DELAY_10_HZ;
+                }
+            } else {
+                    diversityHysteresis = currentTimeUs + DELAY_10_HZ;
+            }            
+        #ifdef DIVERSITY_SWITCH_PIN
+        IOToggle(DIVERSITY_SWITCH_PIN);
+        #endif
+    #endif
 }
 static void updateRSSI1ADC(timeUs_t currentTimeUs)
 {

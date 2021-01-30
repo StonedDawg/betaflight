@@ -464,6 +464,9 @@ void init(void)
 #if !defined(USE_FAKE_LED)
     ledInit(statusLedConfig());
 #endif
+#ifdef DIVERSITY_SWITCH_PIN
+    vrxPinsInit(vrxPinsConfig());
+#endif
     LED2_ON;
 
 #ifdef USE_EXTI
