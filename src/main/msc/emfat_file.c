@@ -36,6 +36,8 @@
 #include "drivers/time.h"
 #include "drivers/usb_msc.h"
 
+#include "drivers/vrx.h"
+
 #include "io/flashfs.h"
 
 #include "pg/flash.h"

@@ -41,6 +41,9 @@
 #include "pg/pg_ids.h"
 
 #include "drivers/light_led.h"
+
+#include "drivers/vrx.h"
+
 #include "drivers/time.h"
 
 #include "io/dashboard.h"

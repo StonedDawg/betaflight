@@ -32,6 +32,8 @@
 #include "config/feature.h"
 
 #include "drivers/light_led.h"
+
+#include "drivers/vrx.h"
 #include "drivers/pwm_esc_detect.h"
 
 #include "config/config.h"

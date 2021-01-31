@@ -35,6 +35,9 @@
 #include "drivers/dma.h"
 #include "drivers/io.h"
 #include "drivers/light_led.h"
+
+#include "drivers/vrx.h"
+
 #include "drivers/max7456.h"
 #include "drivers/nvic.h"
 #include "drivers/osd.h"

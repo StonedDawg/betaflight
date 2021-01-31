@@ -33,6 +33,9 @@
 
 #include "drivers/io.h"
 #include "drivers/light_led.h"
+
+#include "drivers/vrx.h"
+
 #include "drivers/nvic.h"
 #include "drivers/pwm_output.h"
 #include "drivers/serial.h"

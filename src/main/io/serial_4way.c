@@ -37,6 +37,9 @@
 #include "drivers/timer.h"
 #include "drivers/light_led.h"
 
+
+#include "drivers/vrx.h"
+
 #include "flight/mixer.h"
 
 #include "io/beeper.h"

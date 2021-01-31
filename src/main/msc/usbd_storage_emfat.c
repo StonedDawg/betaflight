@@ -35,6 +35,8 @@
 #include "drivers/light_led.h"
 #include "drivers/usb_msc.h"
 
+#include "drivers/vrx.h"
+
 #include "msc/usbd_storage.h"
 #include "msc/usbd_storage_emfat.h"
 

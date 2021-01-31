@@ -45,6 +45,8 @@
 #include "drivers/dma.h"
 #include "drivers/light_led.h"
 
+#include "drivers/vrx.h"
+
 #include "build/debug.h"
 
 #define BLOCK_SIZE                      ((uint32_t)(512))

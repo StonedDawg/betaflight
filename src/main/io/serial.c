@@ -44,6 +44,9 @@
 
 #include "drivers/light_led.h"
 
+
+#include "drivers/vrx.h"
+
 #if defined(USE_VCP)
 #include "drivers/serial_usb_vcp.h"
 #endif

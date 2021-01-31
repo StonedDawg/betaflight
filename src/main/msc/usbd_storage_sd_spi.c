@@ -38,6 +38,8 @@
 #include "drivers/bus_spi.h"
 #include "drivers/io.h"
 #include "drivers/light_led.h"
+
+#include "drivers/vrx.h"
 #include "drivers/sdcard.h"
 #include "drivers/usb_msc.h"
 
