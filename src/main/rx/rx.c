@@ -836,7 +836,7 @@ int32_t nextReceiver = activeReceiver;
             } else {
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
-        #ifdef DIVERSITY_SWITCH_PIN
+        #ifdef VRX_DIVERSITY_SWITCH_PIN
         if (nextReceiver == 0) {
                     vrxPinsSet(0, false);
                     vrxPinsSet(2, false);
