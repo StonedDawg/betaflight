@@ -838,12 +838,12 @@ int32_t nextReceiver = activeReceiver;
             }            
         #ifdef VRX_DIVERSITY_SWITCH_PIN
         if (nextReceiver == 0) {
-                    vrxPinsSet(0, false);
-                    vrxPinsSet(2, false);
+                    VRX_DIVERSITY_0;
+                    VRX_LED_OFF;
                 }
                 if (nextReceiver == 1){
-                    vrxPinsSet(0, true);
-                    vrxPinsSet(2, true);
+                    VRX_DIVERSITY_1;
+                    VRX_LED_ON;
                 } 
         //VRX_DIVERSITY_TOGGLE;
         //VRX_LED_TOGGLE;
