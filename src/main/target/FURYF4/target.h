@@ -28,8 +28,8 @@
 #define USBD_PRODUCT_STRING     "FuryF4"
 #endif
 
-#define LED0_PIN                PB5
-//#define LED1_PIN                PB4
+//#define LED0_PIN                PB5
+#define LED1_PIN                PB4
 
 //#define USE_BEEPER
 //#define BEEPER_PIN              PA8
@@ -159,6 +159,6 @@
 #define TARGET_IO_PORTD         (BIT(2))
 #define VRX_DIVERSITY_SWITCH_PIN    PB6
 #define VRX_OSD_SWITCH_PIN  PB7
-#define VRX_LED_PIN PB4
+#define VRX_LED_PIN PB5
 #define USABLE_TIMER_CHANNEL_COUNT 6
 #define USED_TIMERS             ( TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(8) | TIM_N(11) )

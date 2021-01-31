@@ -803,7 +803,7 @@ static void updateRSSIPWM(void)
 }
 
 int32_t activeReceiver = 0;
-int32_t diversityTargetReceiver;
+int32_t diversityTargetReceiver = 0;
 
 static void updateDiversity(timeUs_t currentTimeUs)
 {
@@ -813,8 +813,8 @@ static void updateDiversity(timeUs_t currentTimeUs)
 int32_t nextReceiver = activeReceiver;
 
 //          if (!EepromSettings.quadversity) {
-            int16_t rssiDiff = (int16_t) rssi1 - (int16_t) rssi2;
-            uint16_t rssiDiffAbs = abs(rssiDiff);
+            int32_t rssiDiff = (int32_t) rssi1 - (int32_t) rssi2;
+            uint32_t rssiDiffAbs = abs(rssiDiff);
             int32_t  currentBestReceiver = activeReceiver;
             static uint32_t diversityHysteresis = 0;
             
@@ -837,18 +837,20 @@ int32_t nextReceiver = activeReceiver;
             } else {
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
-        #ifdef VRX_DIVERSITY_SWITCH_PIN
+        //#ifdef VRX_DIVERSITY_SWITCH_PIN
         if (nextReceiver == 0) {
                     VRX_DIVERSITY_0;
                     VRX_LED_OFF;
+                    activeReceiver = nextReceiver;
                 }
                 if (nextReceiver == 1){
                     VRX_DIVERSITY_1;
                     VRX_LED_ON;
+                    activeReceiver = nextReceiver;
                 } 
         //VRX_DIVERSITY_TOGGLE;
         //VRX_LED_TOGGLE;
-        #endif
+        //#endif
     #endif
 }
 static void updateRSSI1ADC(timeUs_t currentTimeUs)
