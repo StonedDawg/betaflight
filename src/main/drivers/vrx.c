@@ -92,7 +92,7 @@ void vrxPinsToggle(int pin)
     IOToggle(vrxPins[pin]);
 }
 
-void ledSet(int pin, bool on)
+void vrxPinsSet(int pin, bool on)
 {
     const bool inverted = (1 << (pin)) & vrxPinsInversion;
     IOWrite(vrxPins[pin], on ? inverted : !inverted);
