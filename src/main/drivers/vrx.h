@@ -48,6 +48,6 @@ PG_DECLARE(vrxPinsConfig_t, vrxPinsConfig);
 #define VRX_LED_ON                  vrxPinsSet(2, true)
 
 void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig);
-void vrxPinsToggle(int led);
-void vrxPinsSet(int led, bool state);
+void vrxPinsToggle(int pin);
+void vrxPinsSet(int pin, bool state);
 
