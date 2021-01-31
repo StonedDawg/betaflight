@@ -40,6 +40,7 @@
 #include "drivers/adc.h"
 #include "drivers/rx/rx_pwm.h"
 #include "drivers/time.h"
+#include "drivers/vrx.h"
 
 #include "fc/rc_controls.h"
 #include "fc/rc_modes.h"
@@ -836,7 +837,8 @@ int32_t nextReceiver = activeReceiver;
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
         #ifdef DIVERSITY_SWITCH_PIN
-        IOToggle(DIVERSITY_SWITCH_PIN);
+        VRX_DIVERSITY_TOGGLE;
+        VRX_LED_TOGGLE;
         #endif
     #endif
 }
