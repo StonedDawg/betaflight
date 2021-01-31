@@ -46,7 +46,7 @@
 #include "drivers/dshot_command.h"
 #include "drivers/light_led.h"
 
-#include "drivers/vrx.h"
+
 
 #include "drivers/motor.h"
 #include "drivers/sound_beeper.h"

@@ -40,7 +40,7 @@
 #include "drivers/adc.h"
 #include "drivers/rx/rx_pwm.h"
 #include "drivers/time.h"
-#include "drivers/vrx.h"
+
 
 #include "fc/rc_controls.h"
 #include "fc/rc_modes.h"

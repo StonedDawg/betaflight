@@ -78,7 +78,7 @@ bool cliMode = false;
 #include "drivers/io_impl.h"
 #include "drivers/light_led.h"
 
-#include "drivers/vrx.h"
+
 
 #include "drivers/motor.h"
 #include "drivers/rangefinder/rangefinder_hcsr04.h"

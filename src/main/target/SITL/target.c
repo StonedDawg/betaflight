@@ -38,7 +38,7 @@
 #include "drivers/pwm_output.h"
 #include "drivers/light_led.h"
 
-#include "drivers/vrx.h"
+
 
 #include "drivers/timer.h"
 #include "drivers/timer_def.h"
