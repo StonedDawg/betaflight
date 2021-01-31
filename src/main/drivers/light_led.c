@@ -27,10 +27,34 @@
 
 #include "light_led.h"
 
+
+
 PG_REGISTER_WITH_RESET_FN(statusLedConfig_t, statusLedConfig, PG_STATUS_LED_CONFIG, 0);
+PG_REGISTER_WITH_RESET_FN(vrxPinsConfig_t, vrxPinsConfig, PG_VRX_PINS_CONFIG, 0);
+
+static IO_t vrxPins[VRX_PINS];
+static uint8_t vrxPinsInversion = 0;
 
 static IO_t leds[STATUS_LED_NUMBER];
 static uint8_t ledInversion = 0;
+
+#ifndef VRX_DIVERSITY_SWITCH_PIN
+#define vrxPins0_PIN NONE
+#else
+#define vrxPins0_PIN VRX_DIVERSITY_SWITCH_PIN
+#endif
+
+#ifndef VRX_OSD_SWITCH_PIN
+#define vrxPins1_PIN NONE
+#else
+#define vrxPins1_PIN VRX_OSD_SWITCH_PIN
+#endif
+
+#ifndef VRX_LED_PIN
+#define vrxPins2_PIN NONE
+#else
+#define vrxPins2_PIN VRX_LED_PIN
+#endif
 
 #ifndef LED0_PIN
 #define LED0_PIN NONE
@@ -58,6 +82,24 @@ void pgResetFn_statusLedConfig(statusLedConfig_t *statusLedConfig)
     | BIT(1)
 #endif
 #ifdef LED2_INVERTED
+    | BIT(2)
+#endif
+    ;
+}
+void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
+{
+    vrxPinsConfig->ioTags[0] = IO_TAG(vrxPins0_PIN);
+    vrxPinsConfig->ioTags[1] = IO_TAG(vrxPins1_PIN);
+    vrxPinsConfig->ioTags[2] = IO_TAG(vrxPins2_PIN);
+
+    vrxPinsConfig->inversion = 0
+#ifdef vrxPins0_INVERTED
+    | BIT(0)
+#endif
+#ifdef vrxPins1_INVERTED
+    | BIT(1)
+#endif
+#ifdef vrxPins2_INVERTED
     | BIT(2)
 #endif
     ;
@@ -90,4 +132,32 @@ void ledSet(int led, bool on)
 {
     const bool inverted = (1 << (led)) & ledInversion;
     IOWrite(leds[led], on ? inverted : !inverted);
+}
+void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
+{
+    vrxPinsInversion = vrxPinsConfig->inversion;
+    for (int i = 0; i < VRX_PINS; i++) {
+        if (vrxPinsConfig->ioTags[i]) {
+            vrxPins[i] = IOGetByTag(vrxPinsConfig->ioTags[i]);
+            IOInit(vrxPins[i], OWNER_VRX, RESOURCE_INDEX(i));
+            IOConfigGPIO(vrxPins[i], IOCFG_OUT_PP);
+        } else {
+            vrxPins[i] = IO_NONE;
+        }
+    }
+
+    VRX_DIVERSITY_0;
+    VRX_OSD_OFF;
+    VRX_LED_OFF;
+}
+
+void vrxPinsToggle(int pin)
+{
+    IOToggle(vrxPins[pin]);
+}
+
+void vrxPinsSet(int pin, bool state)
+{
+    const bool inverted = (1 << (pin)) & vrxPinsInversion;
+    IOWrite(vrxPins[pin], state ? inverted : !inverted);
 }
