@@ -837,8 +837,16 @@ int32_t nextReceiver = activeReceiver;
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
         #ifdef DIVERSITY_SWITCH_PIN
-        VRX_DIVERSITY_TOGGLE;
-        VRX_LED_TOGGLE;
+        if (nextReceiver == 0) {
+                    vrxPinsSet(0, false);
+                    vrxPinsSet(2, false);
+                }
+                if (nextReceiver == 1){
+                    vrxPinsSet(0, true);
+                    vrxPinsSet(2, true);
+                } 
+        //VRX_DIVERSITY_TOGGLE;
+        //VRX_LED_TOGGLE;
         #endif
     #endif
 }
@@ -892,6 +900,7 @@ void updateRSSI(timeUs_t currentTimeUs)
 
         updateRSSI1ADC(currentTimeUs);
         updateRSSI2ADC(currentTimeUs);
+        updateDiversity(currentTimeUs);
         
 }
 
