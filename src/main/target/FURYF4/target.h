@@ -29,7 +29,7 @@
 #endif
 
 //#define LED0_PIN                PB5
-#define LED1_PIN                PB4
+//#define LED1_PIN                PB4
 
 //#define USE_BEEPER
 //#define BEEPER_PIN              PA8
@@ -160,7 +160,8 @@
 #define VRX_DIVERSITY0_SWITCH_PIN    PB6
 #define VRX_DIVERSITY1_SWITCH_PIN   PB7
 
-#define VRX_LED_PIN PB5
+#define VRX_LED0_PIN PB5
+#define VRX_LED1_PIN PB4
 
 #define VRX_BTN0_PIN    PA8
 #define USABLE_TIMER_CHANNEL_COUNT 6

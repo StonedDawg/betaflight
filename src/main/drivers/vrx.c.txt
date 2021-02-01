@@ -44,10 +44,10 @@ static uint8_t vrxPinsInversion = 0;
 #define vrxPins1_PIN VRX_OSD_SWITCH_PIN
 #endif
 
-#ifndef VRX_LED_PIN
+#ifndef VRX_LED0_PIN
 #define vrxPins2_PIN NONE
 #else
-#define vrxPins2_PIN VRX_LED_PIN
+#define vrxPins2_PIN VRX_LED0_PIN
 #endif
 
 void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
@@ -84,7 +84,7 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
 
     VRX_DIVERSITY_0;
     VRX_OSD_OFF;
-    VRX_LED_OFF;
+    VRX_LED0_OFF;
 }
 
 void vrxPinsToggle(int pin)

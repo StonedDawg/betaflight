@@ -857,27 +857,27 @@ int32_t nextReceiver = activeReceiver;
         if(vrxM.mode == 0){
         if (nextReceiver == 0) {
                     VRX_DIVERSITY_0;
-                    VRX_LED_OFF;
+                    VRX_LED0_OFF;
                     activeReceiver = nextReceiver;
                 }
                 if (nextReceiver == 1){
                     VRX_DIVERSITY_1;
-                    VRX_LED_ON;
+                    VRX_LED0_ON;
                     activeReceiver = nextReceiver;
                 } 
         }else if(vrxM.mode == 1){
             
                     VRX_DIVERSITY_0;
-                    VRX_LED_OFF;
+                    VRX_LED0_OFF;
                     activeReceiver = 0;
         } else {
             
                     VRX_DIVERSITY_1;
-                    VRX_LED_ON;
+                    VRX_LED0_ON;
                     activeReceiver = 1;
         }
         //VRX_DIVERSITY_TOGGLE;
-        //VRX_LED_TOGGLE;
+        //VRX_LED0_TOGGLE;
         //#endif
     #endif
 }
@@ -981,7 +981,21 @@ void updateVrxBtn(timeUs_t currentTimeUs)
             */
         }
 }
-
+void updateVrxLed(timeUs_t currentTimeUs, vrxModule vrxM)
+{
+    static timeUs_t vrxLedTime = 0;
+    if(vrxM == 0){
+        if((int32_t)(currentTimeUs - vrxLedTime) < 0){
+            return;
+        }
+        vrxLedTime = currentTimeUs + DELAY_2_HZ;
+        VRX_LED1_TOGGLE;
+    } else if(vrxM == 1){
+        VRX_LED1_ON;
+    } else {
+        VRX_LED1_OFF;
+    }
+}
 void updateRSSI(timeUs_t currentTimeUs)
 {
 

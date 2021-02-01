@@ -25,7 +25,7 @@
 #include "common/utils.h"
 
 #define STATUS_LED_NUMBER 3
-#define VRX_PINS 4
+#define VRX_PINS 5
 #define VRX_BTNS 1
 
 typedef struct statusLedConfig_s {
@@ -91,10 +91,14 @@ PG_DECLARE(vrxBtnsConfig_t, vrxBtnsConfig);
 #define VRX_OSD_OFF                 vrxPinsSet(2, false)
 #define VRX_OSD_ON                  vrxPinsSet(2, true)
 
-#define VRX_LED_TOGGLE              vrxPinsToggle(3)
-#define VRX_LED_OFF                 vrxPinsSet(3, false)
-#define VRX_LED_ON                  vrxPinsSet(3, true)
+#define VRX_LED0_TOGGLE              vrxPinsToggle(3)
+#define VRX_LED0_OFF                 vrxPinsSet(3, false)
+#define VRX_LED0_ON                  vrxPinsSet(3, true)
 
+
+#define VRX_LED1_TOGGLE              vrxPinsToggle(4)
+#define VRX_LED1_OFF                 vrxPinsSet(4, false)
+#define VRX_LED1_ON                  vrxPinsSet(4, true)
 
 
 #define LED0_TOGGLE              ledToggle(0)

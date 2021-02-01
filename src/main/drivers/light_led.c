@@ -60,10 +60,16 @@ static uint8_t ledInversion = 0;
 #define vrxPins2_PIN VRX_OSD_SWITCH_PIN
 #endif
 
-#ifndef VRX_LED_PIN
+#ifndef VRX_LED0_PIN
 #define vrxPins3_PIN NONE
 #else
-#define vrxPins3_PIN VRX_LED_PIN
+#define vrxPins3_PIN VRX_LED0_PIN
+#endif
+
+#ifndef VRX_LED1_PIN
+#define vrxPins4_PIN NONE
+#else
+#define vrxPins4_PIN VRX_LED1_PIN
 #endif
 
 #ifndef VRX_BTN0_PIN
@@ -120,7 +126,7 @@ void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
     vrxPinsConfig->ioTags[1] = IO_TAG(vrxPins1_PIN);
     vrxPinsConfig->ioTags[2] = IO_TAG(vrxPins2_PIN);
     vrxPinsConfig->ioTags[3] = IO_TAG(vrxPins3_PIN);
-
+    vrxPinsConfig->ioTags[4] = IO_TAG(vrxPins4_PIN);
     vrxPinsConfig->inversion = 0
 #ifdef vrxPins0_INVERTED
     | BIT(0)
@@ -199,7 +205,7 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
 
     VRX_DIVERSITY_0;
     VRX_OSD_OFF;
-    VRX_LED_OFF;
+    VRX_LED0_OFF;
 }
 void vrxBtnsInit(const vrxBtnsConfig_t *vrxBtnsConfig)
 {
