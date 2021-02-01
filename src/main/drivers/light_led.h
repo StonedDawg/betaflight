@@ -62,13 +62,6 @@ PG_DECLARE(vrxPinsConfig_t, vrxPinsConfig);
 
 // Helpful macros
 
-#define VRX_DIVERSITY_TOGGLE              vrxPinsToggle(0)
-#define VRX_DIVERSITY_0                 vrxPinsSet(0, false)
-#define VRX_DIVERSITY_1                  vrxPinsSet(0, true)
-
-#define VRX_DIVERSITY2_TOGGLE              vrxPinsToggle(1)
-#define VRX_DIVERSITY2_0                 vrxPinsSet(1, false)
-#define VRX_DIVERSITY2_1                  vrxPinsSet(1, true)
 
 #ifndef VRX_DIVERSITY_SWITCH_PIN2
 
