@@ -57,10 +57,10 @@
 #define USE_ACC_SPI_MPU6500
 #define USE_ACC_SPI_ICM20689
 
-#define USE_BARO
-#define USE_BARO_MS5611
-#define USE_BARO_BMP280
-#define MS5611_I2C_INSTANCE     I2CDEV_1
+//#define USE_BARO
+//#define USE_BARO_MS5611
+//#define USE_BARO_BMP280
+//#define MS5611_I2C_INSTANCE     I2CDEV_1
 
 #define USE_MAG
 #define USE_MAG_HMC5883
@@ -135,10 +135,10 @@
 #define SPI3_MISO_PIN           PC11
 #define SPI3_MOSI_PIN           PC12
 
-#define USE_I2C
-#define USE_I2C_DEVICE_1
-#define I2C_DEVICE              (I2CDEV_1)
-#define USE_I2C_PULLUP
+//#define USE_I2C
+//#define USE_I2C_DEVICE_1
+//#define I2C_DEVICE              (I2CDEV_1)
+//#define USE_I2C_PULLUP
 //#define I2C1_SCL                PB6
 //#define I2C1_SDA                PB7
 
@@ -148,7 +148,7 @@
 #define RSSI1_ADC_PIN           PC2
 #define RSSI2_ADC_PIN           PA0
 
-//#define CURRENT_METER_ADC_PIN   PC3
+#define CURRENT_METER_ADC_PIN   PC3
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
 #define SERIALRX_UART           SERIAL_PORT_USART1
 #define SERIALRX_PROVIDER       SERIALRX_SBUS
