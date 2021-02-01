@@ -821,7 +821,7 @@ static void updateRSSIPWM(void)
 int32_t activeReceiver = 0;
 int32_t diversityTargetReceiver = 0;
 
-static void updateDiversity(timeUs_t currentTimeUs, vrxModule vrxM)
+static void updateDiversity(timeUs_t currentTimeUs, vrxModule* vrxM)
 {
 #ifndef USE_ADC
     UNUSED(currentTimeUs);
@@ -854,7 +854,7 @@ int32_t nextReceiver = activeReceiver;
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
         //#ifdef VRX_DIVERSITY0_SWITCH_PIN
-        if(vrxM.mode == 0){
+        if(vrxM->mode == 0){
         if (nextReceiver == 0) {
                     VRX_DIVERSITY_0;
                     VRX_LED0_OFF;
@@ -865,7 +865,7 @@ int32_t nextReceiver = activeReceiver;
                     VRX_LED0_ON;
                     activeReceiver = nextReceiver;
                 } 
-        }else if(vrxM.mode == 1){
+        }else if(vrxM->mode == 1){
             
                     VRX_DIVERSITY_0;
                     VRX_LED0_OFF;
@@ -941,7 +941,7 @@ void decrementVrxMode(vrxModule *vrxM){
         vrxM->mode = 2;
     }
 }
-void updateVrxBtn(timeUs_t currentTimeUs)
+void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM)
 {
      bool reading = vrxBtnRead(0);
      if (reading != vrxBtn.lastReading) {
@@ -963,11 +963,11 @@ void updateVrxBtn(timeUs_t currentTimeUs)
                 timeUs_t duration = vrxBtn.changedTime - prevChangeTime;
 
                 if (duration < 5000){
-                    incrementVrxMode(&vrxMdl);
+                    incrementVrxMode(vrxM);
                 }
                 else if (duration < 20000){
                     
-                    decrementVrxMode(&vrxMdl);
+                    decrementVrxMode(vrxM);
                 }
             }
         }
@@ -982,16 +982,16 @@ void updateVrxBtn(timeUs_t currentTimeUs)
         
             */
 }
-void updateVrxLed(timeUs_t currentTimeUs, vrxModule vrxM)
+void updateVrxLed(timeUs_t currentTimeUs, vrxModule* vrxM)
 {
     static timeUs_t vrxLedTime = 0;
-    if(vrxM.mode == 0){
+    if(vrxM->mode == 0){
         if((int32_t)(currentTimeUs - vrxLedTime) < 0){
             return;
         }
         vrxLedTime = currentTimeUs + DELAY_5_HZ;
         VRX_LED1_TOGGLE;
-    } else if(vrxM.mode == 1){
+    } else if(vrxM->mode == 1){
         VRX_LED1_ON;
     } else {
         VRX_LED1_OFF;
@@ -1002,9 +1002,9 @@ void updateRSSI(timeUs_t currentTimeUs)
 
         updateRSSI1ADC(currentTimeUs);
         updateRSSI2ADC(currentTimeUs);
-        updateDiversity(currentTimeUs,vrxMdl);
-        updateVrxBtn(currentTimeUs);
-        updateVrxLed(currentTimeUs,vrxMdl);
+        updateDiversity(currentTimeUs,&vrxMdl);
+        updateVrxBtn(currentTimeUs,&vrxMdl);
+        updateVrxLed(currentTimeUs,&vrxMdl);
         
 }
 
