@@ -214,7 +214,7 @@ void vrxBtnsInit(const vrxBtnsConfig_t *vrxBtnsConfig)
         if (vrxBtnsConfig->ioTags[i]) {
             vrxBtns[i] = IOGetByTag(vrxBtnsConfig->ioTags[i]);
             IOInit(vrxBtns[i], OWNER_VRX, RESOURCE_INDEX(i));
-            IOConfigGPIO(vrxBtns[i], IOCFG_IPD);
+            IOConfigGPIO(vrxBtns[i], IOCFG_IPU);
         } else {
             vrxBtns[i] = IO_NONE;
         }

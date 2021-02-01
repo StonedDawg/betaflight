@@ -943,7 +943,7 @@ void decrementVrxMode(vrxModule *vrxM){
 }
 void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM)
 {
-     bool reading = vrxBtnRead(0);
+     bool reading = !vrxBtnRead(0);
      if (reading != vrxBtn.lastReading) {
             vrxBtn.lastDebounceTime = currentTimeUs;
         }
