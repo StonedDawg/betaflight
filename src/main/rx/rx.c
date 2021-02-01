@@ -967,14 +967,14 @@ void updateVrxBtn(timeUs_t currentTimeUs)
                 }
                 else if (duration < 20000){
                     
-                    DecrementVrxMode(&vrxMdl);
+                    decrementVrxMode(&vrxMdl);
                 }
             }
         }
-
+        /**
         if (vrxBtn.pressed) {
             timeUs_t duration = currentTimeUs - vrxBtn.changedTime;
-            /**
+            
             if (duration >= 2000){
 
             }
