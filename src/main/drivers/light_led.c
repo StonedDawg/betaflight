@@ -44,16 +44,22 @@ static uint8_t ledInversion = 0;
 #define vrxPins0_PIN VRX_DIVERSITY_SWITCH_PIN
 #endif
 
-#ifndef VRX_OSD_SWITCH_PIN
+#ifndef VRX_DIVERSITY_SWITCH_PIN2
 #define vrxPins1_PIN NONE
 #else
-#define vrxPins1_PIN VRX_OSD_SWITCH_PIN
+#define vrxPins1_PIN VRX_DIVERSITY_SWITCH_PIN2
+#endif
+
+#ifndef VRX_OSD_SWITCH_PIN
+#define vrxPins2_PIN NONE
+#else
+#define vrxPins2_PIN VRX_OSD_SWITCH_PIN
 #endif
 
 #ifndef VRX_LED_PIN
-#define vrxPins2_PIN NONE
+#define vrxPins3_PIN NONE
 #else
-#define vrxPins2_PIN VRX_LED_PIN
+#define vrxPins3_PIN VRX_LED_PIN
 #endif
 
 #ifndef LED0_PIN
@@ -91,6 +97,7 @@ void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
     vrxPinsConfig->ioTags[0] = IO_TAG(vrxPins0_PIN);
     vrxPinsConfig->ioTags[1] = IO_TAG(vrxPins1_PIN);
     vrxPinsConfig->ioTags[2] = IO_TAG(vrxPins2_PIN);
+    vrxPinsConfig->ioTags[3] = IO_TAG(vrxPins3_PIN);
 
     vrxPinsConfig->inversion = 0
 #ifdef vrxPins0_INVERTED
@@ -101,6 +108,9 @@ void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
 #endif
 #ifdef vrxPins2_INVERTED
     | BIT(2)
+#endif
+#ifdef vrxPins3_INVERTED
+    | BIT(3)
 #endif
     ;
 }
@@ -147,6 +157,7 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
     }
 
     VRX_DIVERSITY_0;
+    VRX_DIVERSITY2_1;
     VRX_OSD_OFF;
     VRX_LED_OFF;
 }
@@ -160,4 +171,10 @@ void vrxPinsSet(int pin, bool state)
 {
     const bool inverted = (1 << (pin)) & vrxPinsInversion;
     IOWrite(vrxPins[pin], state ? inverted : !inverted);
+}
+
+void vrxDualPinsSet(bool state)
+{
+    vrxPinsSet(0, state);
+    vrxPinsSet(1, !state);
 }

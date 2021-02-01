@@ -25,7 +25,7 @@
 #include "common/utils.h"
 
 #define STATUS_LED_NUMBER 3
-#define VRX_PINS 3
+#define VRX_PINS 4
 
 typedef struct statusLedConfig_s {
     ioTag_t ioTags[STATUS_LED_NUMBER];
@@ -66,13 +66,35 @@ PG_DECLARE(vrxPinsConfig_t, vrxPinsConfig);
 #define VRX_DIVERSITY_0                 vrxPinsSet(0, false)
 #define VRX_DIVERSITY_1                  vrxPinsSet(0, true)
 
-#define VRX_OSD_TOGGLE              vrxPinsToggle(1)
-#define VRX_OSD_OFF                 vrxPinsSet(1, false)
-#define VRX_OSD_ON                  vrxPinsSet(1, true)
+#define VRX_DIVERSITY2_TOGGLE              vrxPinsToggle(1)
+#define VRX_DIVERSITY2_0                 vrxPinsSet(1, false)
+#define VRX_DIVERSITY2_1                  vrxPinsSet(1, true)
 
-#define VRX_LED_TOGGLE              vrxPinsToggle(2)
-#define VRX_LED_OFF                 vrxPinsSet(2, false)
-#define VRX_LED_ON                  vrxPinsSet(2, true)
+#ifndef VRX_DIVERSITY_SWITCH_PIN2
+
+#define VRX_DIVERSITY_TOGGLE              vrxPinsToggle(0)
+#define VRX_DIVERSITY_0                 vrxPinsSet(0, false)
+#define VRX_DIVERSITY_1                  vrxPinsSet(0, true)
+
+#define VRX_DIVERSITY2_TOGGLE              vrxPinsToggle(1)
+#define VRX_DIVERSITY2_0                 vrxPinsSet(1, false)
+#define VRX_DIVERSITY2_1                  vrxPinsSet(1, true)
+
+#else
+
+#define VRX_DIVERSITY_TOGGLE              vrxPinsToggle(0)
+#define VRX_DIVERSITY_0                 vrxDualPinsSet(false)
+#define VRX_DIVERSITY_1                  vrxDualPinsSet(true)
+
+#endif
+
+#define VRX_OSD_TOGGLE              vrxPinsToggle(2)
+#define VRX_OSD_OFF                 vrxPinsSet(2, false)
+#define VRX_OSD_ON                  vrxPinsSet(2, true)
+
+#define VRX_LED_TOGGLE              vrxPinsToggle(3)
+#define VRX_LED_OFF                 vrxPinsSet(3, false)
+#define VRX_LED_ON                  vrxPinsSet(3, true)
 
 
 
@@ -95,5 +117,6 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig);
 void vrxPinsToggle(int pin);
 void vrxPinsSet(int pin, bool state);
 
+void vrxDualPinsSet(bool state);
 
 #endif
