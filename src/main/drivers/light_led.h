@@ -26,6 +26,7 @@
 
 #define STATUS_LED_NUMBER 3
 #define VRX_PINS 4
+#define VRX_BTNS 1
 
 typedef struct statusLedConfig_s {
     ioTag_t ioTags[STATUS_LED_NUMBER];
@@ -38,8 +39,13 @@ typedef struct vrxPinsConfig_s {
     ioTag_t ioTags[VRX_PINS];
     uint8_t inversion;
 } vrxPinsConfig_t;
+typedef struct vrxBtnsConfig_s {
+    ioTag_t ioTags[VRX_BTNS];
+    uint8_t inversion;
+} vrxBtnsConfig_t;
 
 PG_DECLARE(vrxPinsConfig_t, vrxPinsConfig);
+PG_DECLARE(vrxBtnsConfig_t, vrxBtnsConfig);
 
 // Helpful macros
 #if defined(UNIT_TEST) || defined(USE_FAKE_LED)
@@ -112,4 +118,5 @@ void vrxPinsSet(int pin, bool state);
 
 void vrxDualSwitchSet(bool state);
 
+bool vrxBtnRead(int pin);
 #endif

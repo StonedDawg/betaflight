@@ -31,9 +31,13 @@
 
 PG_REGISTER_WITH_RESET_FN(statusLedConfig_t, statusLedConfig, PG_STATUS_LED_CONFIG, 0);
 PG_REGISTER_WITH_RESET_FN(vrxPinsConfig_t, vrxPinsConfig, PG_VRX_PINS_CONFIG, 0);
+PG_REGISTER_WITH_RESET_FN(vrxBtnsConfig_t, vrxBtnsConfig, PG_VRX_BTNS_CONFIG, 0);
 
 static IO_t vrxPins[VRX_PINS];
+static IO_t vrxBtns[VRX_BTNS];
 static uint8_t vrxPinsInversion = 0;
+static uint8_t vrxBtnsInversion = 0;
+
 
 static IO_t leds[STATUS_LED_NUMBER];
 static uint8_t ledInversion = 0;
@@ -60,6 +64,24 @@ static uint8_t ledInversion = 0;
 #define vrxPins3_PIN NONE
 #else
 #define vrxPins3_PIN VRX_LED_PIN
+#endif
+
+#ifndef VRX_BTN0_PIN
+#define vrxBtns0_PIN NONE
+#else
+#define vrxBtns0_PIN VRX_BTN0_PIN
+#endif
+
+#ifndef VRX_BTN1_PIN
+#define vrxBtns1_PIN NONE
+#else
+#define vrxBtns1_PIN VRX_BTN1_PIN
+#endif
+
+#ifndef VRX_BTN2_PIN
+#define vrxBtns2_PIN NONE
+#else
+#define vrxBtns2_PIN VRX_BTN2_PIN
 #endif
 
 #ifndef LED0_PIN
@@ -115,6 +137,25 @@ void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
     ;
 }
 
+void pgResetFn_vrxBtnsConfig(vrxBtnsConfig_t *vrxBtnsConfig)
+{
+    vrxBtnsConfig->ioTags[0] = IO_TAG(vrxBtns0_PIN);
+    vrxBtnsConfig->ioTags[1] = IO_TAG(vrxBtns1_PIN);
+    vrxBtnsConfig->ioTags[2] = IO_TAG(vrxBtns2_PIN);
+
+    vrxBtnsConfig->inversion = 0
+#ifdef vrxBtns0_INVERTED
+    | BIT(0)
+#endif
+#ifdef vrxBtns1_INVERTED
+    | BIT(1)
+#endif
+#ifdef vrxBtns2_INVERTED
+    | BIT(2)
+#endif
+    ;
+}
+
 void ledInit(const statusLedConfig_t *statusLedConfig)
 {
     ledInversion = statusLedConfig->inversion;
@@ -160,6 +201,19 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
     VRX_OSD_OFF;
     VRX_LED_OFF;
 }
+void vrxBtnsInit(const vrxBtnsConfig_t *vrxBtnsConfig)
+{
+    vrxBtnsInversion = vrxBtnsConfig->inversion;
+    for (int i = 0; i < VRX_BTNS; i++) {
+        if (vrxBtnsConfig->ioTags[i]) {
+            vrxBtns[i] = IOGetByTag(vrxBtnsConfig->ioTags[i]);
+            IOInit(vrxBtns[i], OWNER_VRX, RESOURCE_INDEX(i));
+            IOConfigGPIO(vrxBtns[i], IOCFG_IPD);
+        } else {
+            vrxBtns[i] = IO_NONE;
+        }
+    }
+}
 
 void vrxPinsToggle(int pin)
 {
@@ -171,9 +225,18 @@ void vrxPinsSet(int pin, bool state)
     const bool inverted = (1 << (pin)) & vrxPinsInversion;
     IOWrite(vrxPins[pin], state ? inverted : !inverted);
 }
+bool vrxPinsRead(int pin)
+{
+    return IORead(vrxPins[pin]);
+}
 
 void vrxDualSwitchSet(bool state)
 {
     vrxPinsSet(0, state);
     vrxPinsSet(1, !state);
+}
+
+bool vrxBtnRead(int pin)
+{
+    return IORead(vrxBtns[pin]);
 }

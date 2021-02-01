@@ -70,6 +70,22 @@
 #include "rx/rx_spi.h"
 #include "rx/targetcustomserial.h"
 
+#define BUTTON_DEBOUNCE_DELAY 3000
+
+typedef struct vrxModule {
+    uint8_t mode;
+} vrxModule;
+
+typedef struct vrxModuleBtn {
+    timeUs_t lastDebounceTime;
+    bool lastReading;
+    bool pressed;
+    timeUs_t changedTime;
+
+} vrxModuleBtn;
+
+vrxModuleBtn vrxBtn;
+vrxModule vrxMdl;
 
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
@@ -805,7 +821,7 @@ static void updateRSSIPWM(void)
 int32_t activeReceiver = 0;
 int32_t diversityTargetReceiver = 0;
 
-static void updateDiversity(timeUs_t currentTimeUs)
+static void updateDiversity(timeUs_t currentTimeUs, vrxModule vrxM)
 {
 #ifndef USE_ADC
     UNUSED(currentTimeUs);
@@ -838,6 +854,7 @@ int32_t nextReceiver = activeReceiver;
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
         //#ifdef VRX_DIVERSITY0_SWITCH_PIN
+        if(vrxM.mode == 0){
         if (nextReceiver == 0) {
                     VRX_DIVERSITY_0;
                     VRX_LED_OFF;
@@ -848,6 +865,17 @@ int32_t nextReceiver = activeReceiver;
                     VRX_LED_ON;
                     activeReceiver = nextReceiver;
                 } 
+        }else if(vrxM.mode == 1){
+            
+                    VRX_DIVERSITY_0;
+                    VRX_LED_OFF;
+                    activeReceiver = 0;
+        } else {
+            
+                    VRX_DIVERSITY_1;
+                    VRX_LED_ON;
+                    activeReceiver = 1;
+        }
         //VRX_DIVERSITY_TOGGLE;
         //VRX_LED_TOGGLE;
         //#endif
@@ -898,12 +926,69 @@ static void updateRSSI2ADC(timeUs_t currentTimeUs)
 #endif
 }
 
+void incrementVrxMode(vrxModule *vrxM){
+    if(vrxM->mode < 2){
+        vrxM->mode++;
+    } else {
+        vrxM->mode = 0;
+    }
+}
+
+void decrementVrxMode(vrxModule *vrxM){
+    if(vrxM->mode>0){
+        vrxM->mode--;
+    } else {
+        vrxM->mode = 2;
+    }
+}
+void updateVrxBtn(timeUs_t currentTimeUs)
+{
+     bool reading = vrxBtnRead(0);
+     if (reading != vrxBtn.lastReading) {
+            vrxBtn.lastDebounceTime = currentTimeUs;
+        }
+
+        vrxBtn.lastReading = reading;
+
+        if (
+            reading != vrxBtn.pressed &&
+            (currentTimeUs - vrxBtn.lastDebounceTime) >= BUTTON_DEBOUNCE_DELAY
+        ) {
+            vrxBtn.pressed = reading;
+
+            timeUs_t prevChangeTime = vrxBtn.changedTime;
+            vrxBtn.changedTime = currentTimeUs;
+
+            if (!vrxBtn.pressed) {
+                timeUs_t duration = vrxBtn.changedTime - prevChangeTime;
+
+                if (duration < 5000){
+                    incrementVrxMode(&vrxMdl);
+                }
+                else if (duration < 20000){
+                    
+                    DecrementVrxMode(&vrxMdl);
+                }
+            }
+        }
+
+        if (vrxBtn.pressed) {
+            timeUs_t duration = currentTimeUs - vrxBtn.changedTime;
+            /**
+            if (duration >= 2000){
+
+            }
+            */
+        }
+}
+
 void updateRSSI(timeUs_t currentTimeUs)
 {
 
         updateRSSI1ADC(currentTimeUs);
         updateRSSI2ADC(currentTimeUs);
-        updateDiversity(currentTimeUs);
+        updateDiversity(currentTimeUs,vrxMdl);
+        updateVrxBtn(currentTimeUs);
         
 }
 
