@@ -157,7 +157,6 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
     }
 
     VRX_DIVERSITY_0;
-    VRX_DIVERSITY2_1;
     VRX_OSD_OFF;
     VRX_LED_OFF;
 }
