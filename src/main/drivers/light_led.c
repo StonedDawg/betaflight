@@ -38,16 +38,16 @@ static uint8_t vrxPinsInversion = 0;
 static IO_t leds[STATUS_LED_NUMBER];
 static uint8_t ledInversion = 0;
 
-#ifndef VRX_DIVERSITY_SWITCH_PIN
+#ifndef VRX_DIVERSITY0_SWITCH_PIN
 #define vrxPins0_PIN NONE
 #else
-#define vrxPins0_PIN VRX_DIVERSITY_SWITCH_PIN
+#define vrxPins0_PIN VRX_DIVERSITY0_SWITCH_PIN
 #endif
 
-#ifndef VRX_DIVERSITY_SWITCH_PIN2
+#ifndef VRX_DIVERSITY1_SWITCH_PIN
 #define vrxPins1_PIN NONE
 #else
-#define vrxPins1_PIN VRX_DIVERSITY_SWITCH_PIN2
+#define vrxPins1_PIN VRX_DIVERSITY1_SWITCH_PIN
 #endif
 
 #ifndef VRX_OSD_SWITCH_PIN
@@ -172,7 +172,7 @@ void vrxPinsSet(int pin, bool state)
     IOWrite(vrxPins[pin], state ? inverted : !inverted);
 }
 
-void vrxDualPinsSet(bool state)
+void vrxDualSwitchSet(bool state)
 {
     vrxPinsSet(0, state);
     vrxPinsSet(1, !state);

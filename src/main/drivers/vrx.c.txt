@@ -32,10 +32,10 @@ PG_REGISTER_WITH_RESET_FN(vrxPinsConfig_t, vrxPinsConfig, PG_VRX_PINS_CONFIG, 0)
 static IO_t vrxPins[VRX_PINS];
 static uint8_t vrxPinsInversion = 0;
 
-#ifndef VRX_DIVERSITY_SWITCH_PIN
+#ifndef VRX_DIVERSITY0_SWITCH_PIN
 #define vrxPins0_PIN NONE
 #else
-#define vrxPins0_PIN VRX_DIVERSITY_SWITCH_PIN
+#define vrxPins0_PIN VRX_DIVERSITY0_SWITCH_PIN
 #endif
 
 #ifndef VRX_OSD_SWITCH_PIN

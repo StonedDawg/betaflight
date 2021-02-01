@@ -63,7 +63,7 @@ PG_DECLARE(vrxPinsConfig_t, vrxPinsConfig);
 // Helpful macros
 
 
-#ifndef VRX_DIVERSITY_SWITCH_PIN2
+#ifndef VRX_DIVERSITY1_SWITCH_PIN
 
 #define VRX_DIVERSITY_TOGGLE              vrxPinsToggle(0)
 #define VRX_DIVERSITY_0                 vrxPinsSet(0, false)
@@ -110,6 +110,6 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig);
 void vrxPinsToggle(int pin);
 void vrxPinsSet(int pin, bool state);
 
-void vrxDualPinsSet(bool state);
+void vrxDualSwitchSet(bool state);
 
 #endif
