@@ -76,8 +76,8 @@ PG_DECLARE(vrxPinsConfig_t, vrxPinsConfig);
 #else
 
 #define VRX_DIVERSITY_TOGGLE              vrxPinsToggle(0)
-#define VRX_DIVERSITY_0                 vrxDualPinsSet(false)
-#define VRX_DIVERSITY_1                  vrxDualPinsSet(true)
+#define VRX_DIVERSITY_0                 vrxDualSwitchSet(false)
+#define VRX_DIVERSITY_1                  vrxDualSwitchSet(true)
 
 #endif
 
