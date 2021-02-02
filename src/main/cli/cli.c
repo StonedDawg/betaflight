@@ -5019,8 +5019,8 @@ const cliResourceValue_t resourceTable[] = {
     DEFW( OWNER_I2C_SDA,       PG_I2C_CONFIG, i2cConfig_t, ioTagSda, I2CDEV_COUNT ),
 #endif
     DEFA( OWNER_LED,           PG_STATUS_LED_CONFIG, statusLedConfig_t, ioTags[0], STATUS_LED_NUMBER ),
-    DEFA( OWNER_VRX,           PG_VRX_PINS_CONFIG, vrxPinsConfig_t, ioTags[0], VRX_PINS ),
-    DEFA( OWNER_VRX,           PG_VRX_BTNS_CONFIG, vrxBtnsConfig_t, ioTags[0], VRX_BTNS ),
+    DEFA( OWNER_VRX_PINS,           PG_VRX_PINS_CONFIG, vrxPinsConfig_t, ioTags[0], VRX_PINS ),
+    DEFA( OWNER_VRX_BTNS,           PG_VRX_BTNS_CONFIG, vrxBtnsConfig_t, ioTags[0], VRX_BTNS ),
 
 #ifdef USE_SPEKTRUM_BIND
     DEFS( OWNER_RX_BIND,       PG_RX_CONFIG, rxConfig_t, spektrum_bind_pin_override_ioTag ),

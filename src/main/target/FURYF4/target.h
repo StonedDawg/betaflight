@@ -103,9 +103,9 @@
 #define UART1_RX_PIN            PA10
 //#define UART1_TX_PIN            PA9
 
-#define USE_UART3
-#define UART3_RX_PIN            PB11
-#define UART3_TX_PIN            PB10
+//#define USE_UART3
+//#define UART3_RX_PIN            PB11
+//#define UART3_TX_PIN            PB10
 
 #define USE_UART6
 #define UART6_RX_PIN            PC7
@@ -166,6 +166,8 @@
 #define VRX_BTN0_PIN    PA9
 
 #define VRX_BTN1_PIN    PA8
+
+#define VRX_BTN2_PIN    PB10
 
 #define USABLE_TIMER_CHANNEL_COUNT 6
 #define USED_TIMERS             ( TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(8) | TIM_N(11) )

@@ -199,7 +199,7 @@ void vrxPinsInit(const vrxPinsConfig_t *vrxPinsConfig)
     for (int i = 0; i < VRX_PINS; i++) {
         if (vrxPinsConfig->ioTags[i]) {
             vrxPins[i] = IOGetByTag(vrxPinsConfig->ioTags[i]);
-            IOInit(vrxPins[i], OWNER_VRX, RESOURCE_INDEX(i));
+            IOInit(vrxPins[i], OWNER_VRX_PINS, RESOURCE_INDEX(i));
             IOConfigGPIO(vrxPins[i], IOCFG_OUT_PP);
         } else {
             vrxPins[i] = IO_NONE;
@@ -216,7 +216,7 @@ void vrxBtnsInit(const vrxBtnsConfig_t *vrxBtnsConfig)
     for (int i = 0; i < VRX_BTNS; i++) {
         if (vrxBtnsConfig->ioTags[i]) {
             vrxBtns[i] = IOGetByTag(vrxBtnsConfig->ioTags[i]);
-            IOInit(vrxBtns[i], OWNER_VRX, RESOURCE_INDEX(i));
+            IOInit(vrxBtns[i], OWNER_VRX_BTNS, RESOURCE_INDEX(i));
             IOConfigGPIO(vrxBtns[i], IOCFG_IPU);
         } else {
             vrxBtns[i] = IO_NONE;
