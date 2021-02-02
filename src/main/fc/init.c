@@ -469,6 +469,7 @@ void init(void)
 #endif
 #ifdef VRX_DIVERSITY0_SWITCH_PIN
     vrxPinsInit(vrxPinsConfig());
+    vrxBtnsInit(vrxBtnsConfig());
 #endif
     LED2_ON;
 
