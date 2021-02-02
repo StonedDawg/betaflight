@@ -962,11 +962,21 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
                 timeUs_t duration = vrxB->changedTime - prevChangeTime;
 
                 if (duration < 5000){
-                    incrementVrxMode(*vrxM);
+                    //incrementVrxMode(*vrxM);
+                     if(vrxM->mode < 2){
+                            vrxM->mode++;
+                        } else {
+                            vrxM->mode = 0;
+                        }
                 }
                 else if (duration < 20000){
                     
-                    decrementVrxMode(*vrxM);
+                    //decrementVrxMode(*vrxM);
+                        if(vrxM->mode>0){
+                            vrxM->mode--;
+                        } else {
+                            vrxM->mode = 2;
+                        }
                 }
             }
         }
