@@ -940,39 +940,39 @@ void decrementVrxMode(vrxModule *vrxM){
         vrxM->mode = 2;
     }
 }
-void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM)
+void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
 {
      bool reading = !vrxBtnRead(0);
-     if (reading != vrxBtn->lastReading) {
-            vrxBtn->lastDebounceTime = currentTimeUs;
+     if (reading != vrxB->lastReading) {
+            vrxB->lastDebounceTime = currentTimeUs;
         }
 
-        vrxBtn->lastReading = reading;
+        vrxB->lastReading = reading;
 
         if (
-            reading != vrxBtn->pressed &&
-            (currentTimeUs - vrxBtn->lastDebounceTime) >= BUTTON_DEBOUNCE_DELAY
+            reading != vrxB->pressed &&
+            (currentTimeUs - vrxB->lastDebounceTime) >= BUTTON_DEBOUNCE_DELAY
         ) {
-            vrxBtn->pressed = reading;
+            vrxB->pressed = reading;
 
-            timeUs_t prevChangeTime = vrxBtn->changedTime;
-            vrxBtn->changedTime = currentTimeUs;
+            timeUs_t prevChangeTime = vrxB->changedTime;
+            vrxB->changedTime = currentTimeUs;
 
-            if (!vrxBtn->pressed) {
-                timeUs_t duration = vrxBtn->changedTime - prevChangeTime;
+            if (!vrxB->pressed) {
+                timeUs_t duration = vrxB->changedTime - prevChangeTime;
 
                 if (duration < 5000){
-                    incrementVrxMode(*vrxM);
+                    incrementVrxMode(vrxM);
                 }
                 else if (duration < 20000){
                     
-                    decrementVrxMode(*vrxM);
+                    decrementVrxMode(vrxM);
                 }
             }
         }
         /**
-        if (vrxBtn.pressed) {
-            timeUs_t duration = currentTimeUs - vrxBtn.changedTime;
+        if (vrxB->pressed) {
+            timeUs_t duration = currentTimeUs - vrxB->changedTime;
             
             if (duration >= 2000){
 
@@ -1002,7 +1002,7 @@ void updateRSSI(timeUs_t currentTimeUs)
         updateRSSI1ADC(currentTimeUs);
         updateRSSI2ADC(currentTimeUs);
         updateDiversity(currentTimeUs,&vrxMdl);
-        updateVrxBtn(currentTimeUs,&vrxMdl);
+        updateVrxBtn(currentTimeUs,&vrxMdl,&vrxBtn);
         updateVrxLed(currentTimeUs,&vrxMdl);
         
 }
