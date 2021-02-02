@@ -86,8 +86,6 @@ typedef struct vrxModuleBtn {
 
 vrxModuleBtn vrxBtn;
 vrxModule vrxMdl;
-vrxBtn = {0,0,0,0};
-vrxMdl = {0};
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
 static uint16_t rssi1 = 0;                  // range: [0;1023]
@@ -945,23 +943,23 @@ void decrementVrxMode(vrxModule *vrxM){
 void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM)
 {
      bool reading = !vrxBtnRead(0);
-     if (reading != vrxBtn.lastReading) {
-            vrxBtn.lastDebounceTime = currentTimeUs;
+     if (reading != vrxBtn->lastReading) {
+            vrxBtn->lastDebounceTime = currentTimeUs;
         }
 
-        vrxBtn.lastReading = reading;
+        vrxBtn->lastReading = reading;
 
         if (
-            reading != vrxBtn.pressed &&
-            (currentTimeUs - vrxBtn.lastDebounceTime) >= BUTTON_DEBOUNCE_DELAY
+            reading != vrxBtn->pressed &&
+            (currentTimeUs - vrxBtn->lastDebounceTime) >= BUTTON_DEBOUNCE_DELAY
         ) {
-            vrxBtn.pressed = reading;
+            vrxBtn->pressed = reading;
 
-            timeUs_t prevChangeTime = vrxBtn.changedTime;
-            vrxBtn.changedTime = currentTimeUs;
+            timeUs_t prevChangeTime = vrxBtn->changedTime;
+            vrxBtn->changedTime = currentTimeUs;
 
-            if (!vrxBtn.pressed) {
-                timeUs_t duration = vrxBtn.changedTime - prevChangeTime;
+            if (!vrxBtn->pressed) {
+                timeUs_t duration = vrxBtn->changedTime - prevChangeTime;
 
                 if (duration < 5000){
                     incrementVrxMode(*vrxM);
