@@ -121,6 +121,6 @@ void vrxPinsToggle(int pin);
 void vrxPinsSet(int pin, bool state);
 
 void vrxDualSwitchSet(bool state);
-
+void vrxBtnsInit(const vrxBtnsConfig_t *vrxBtnsConfig);
 bool vrxBtnRead(int pin);
 #endif
