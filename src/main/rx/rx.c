@@ -73,19 +73,19 @@
 #define BUTTON_DEBOUNCE_DELAY 3000
 
 typedef struct vrxModule {
-    uint8_t mode=0;
-} vrxModule;
+    uint8_t mode;
+} vrxModule_default={0};
 
 typedef struct vrxModuleBtn {
-    timeUs_t lastDebounceTime=0;
-    bool lastReading=0;
-    bool pressed=0;
-    timeUs_t changedTime=0;
+    timeUs_t lastDebounceTime;
+    bool lastReading;
+    bool pressed;
+    timeUs_t changedTime;
 
-} vrxModuleBtn;
+} vrxModuleBtn_default ={0,0,0,0};
 
-vrxModuleBtn vrxBtn;
-vrxModule vrxMdl;
+vrxModuleBtn vrxBtn = vrxModuleBtn_default;
+vrxModule vrxMdl = vrxModule_default;
 
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
