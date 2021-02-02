@@ -157,8 +157,8 @@
 #define TARGET_IO_PORTB         0xffff
 #define TARGET_IO_PORTC         0xffff
 #define TARGET_IO_PORTD         (BIT(2))
-#define VRX_DIVERSITY0_SWITCH_PIN    PB6
-#define VRX_DIVERSITY1_SWITCH_PIN   PB7
+#define VRX_DIVERSITY0_SWITCH_PIN    PB7
+#define VRX_DIVERSITY1_SWITCH_PIN   PB6
 
 #define VRX_LED0_PIN PB5
 #define VRX_LED1_PIN PB4
