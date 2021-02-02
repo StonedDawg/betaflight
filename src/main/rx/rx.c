@@ -72,20 +72,20 @@
 
 #define BUTTON_DEBOUNCE_DELAY 300000
 
-typedef struct vrxModule {
+typedef struct vrxDock {
     uint8_t mode;
-} vrxModule;
+} vrxDock;
 
-typedef struct vrxModuleBtn {
+typedef struct vrxDockBtn {
     timeUs_t lastDebounceTime;
     bool lastReading;
     bool pressed;
     timeUs_t changedTime;
 
-} vrxModuleBtn;
+} vrxDockBtn;
 
-vrxModuleBtn vrxBtn;
-vrxModule vrxMdl;
+vrxDockBtn vrxBtn;
+vrxDock vrxMdl;
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
 static uint16_t rssi1 = 0;                  // range: [0;1023]
@@ -820,7 +820,7 @@ static void updateRSSIPWM(void)
 int32_t activeReceiver = 0;
 int32_t diversityTargetReceiver = 0;
 
-static void updateDiversity(timeUs_t currentTimeUs, vrxModule* vrxM)
+static void updateDiversity(timeUs_t currentTimeUs, vrxDock* vrxBay)
 {
 #ifndef USE_ADC
     UNUSED(currentTimeUs);
@@ -853,7 +853,7 @@ int32_t nextReceiver = activeReceiver;
                     diversityHysteresis = currentTimeUs + DELAY_10_HZ;
             }            
         //#ifdef VRX_DIVERSITY0_SWITCH_PIN
-        if(vrxM->mode == 0){
+        if(vrxBay->mode == 0){
         if (nextReceiver == 0) {
                     VRX_DIVERSITY_0;
                     VRX_LED0_ON;
@@ -864,7 +864,7 @@ int32_t nextReceiver = activeReceiver;
                     VRX_LED0_OFF;
                     activeReceiver = nextReceiver;
                 } 
-        }else if(vrxM->mode == 1){
+        }else if(vrxBay->mode == 1){
             
                     VRX_DIVERSITY_0;
                     VRX_LED0_ON;
@@ -925,22 +925,22 @@ static void updateRSSI2ADC(timeUs_t currentTimeUs)
 #endif
 }
 
-void incrementVrxMode(vrxModule *vrxM){
-    if(vrxM->mode < 2){
-        vrxM->mode++;
+void incrementVrxMode(vrxDock *vrxBay){
+    if(vrxBay->mode < 2){
+        vrxBay->mode++;
     } else {
-        vrxM->mode = 0;
+        vrxBay->mode = 0;
     }
 }
 
-void decrementVrxMode(vrxModule *vrxM){
-    if(vrxM->mode>0){
-        vrxM->mode--;
+void decrementVrxMode(vrxDock *vrxBay){
+    if(vrxBay->mode>0){
+        vrxBay->mode--;
     } else {
-        vrxM->mode = 2;
+        vrxBay->mode = 2;
     }
 }
-void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
+void updateVrxBtn(timeUs_t currentTimeUs, vrxDock* vrxBay, vrxDockBtn* vrxB)
 {
      bool reading = !vrxBtnRead(0);
         /**
@@ -970,11 +970,11 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
                 timeUs_t duration = vrxB->changedTime - prevChangeTime;
 
                 if (duration < 1500000){
-                    incrementVrxMode(vrxM);
+                    incrementVrxMode(vrxBay);
                 }
                 else if (duration < 3000000){
                     
-                    decrementVrxMode(vrxM);
+                    decrementVrxMode(vrxBay);
                     //VRX_LED0_TOGGLE;
                 }
             }
@@ -990,16 +990,16 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
         
             
 }
-void updateVrxLed(timeUs_t currentTimeUs, vrxModule* vrxM)
+void updateVrxLed(timeUs_t currentTimeUs, vrxDock* vrxBay)
 {
     static timeUs_t vrxLedTime = 0;
-    if(vrxM->mode == 0){
+    if(vrxBay->mode == 0){
         if((int32_t)(currentTimeUs - vrxLedTime) < 0){
             return;
         }
         vrxLedTime = currentTimeUs + DELAY_5_HZ;
         VRX_LED1_TOGGLE;
-    } else if(vrxM->mode == 1){
+    } else if(vrxBay->mode == 1){
         VRX_LED1_OFF;
     } else {
         VRX_LED1_ON;
