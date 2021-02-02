@@ -70,7 +70,7 @@
 #include "rx/rx_spi.h"
 #include "rx/targetcustomserial.h"
 
-#define BUTTON_DEBOUNCE_DELAY 3000
+#define BUTTON_DEBOUNCE_DELAY 300000
 
 typedef struct vrxModule {
     uint8_t mode;
@@ -969,14 +969,14 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
             if (!vrxB->pressed) {
                 timeUs_t duration = vrxB->changedTime - prevChangeTime;
 
-                if (duration < 5000){
+                if (duration < 500000){
                     if(vrxM->mode < 2){
                         vrxM->mode++;
                     } else {
                         vrxM->mode = 0;
                     }
                 }
-                else if (duration < 20000){
+                else if (duration < 2000000){
                     
                     decrementVrxMode(vrxM);
                     //VRX_LED0_TOGGLE;
@@ -987,7 +987,7 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
         if (vrxB->pressed) {
             timeUs_t duration = currentTimeUs - vrxB->changedTime;
             
-            if (duration >= 2000){
+            if (duration >= 2000000){
                 VRX_LED1_ON;
             }
         }
