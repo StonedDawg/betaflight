@@ -100,7 +100,7 @@
 #define USE_USB_DETECT
 
 #define USE_UART1
-#define UART1_RX_PIN            PA10
+//#define UART1_RX_PIN            PA10
 //#define UART1_TX_PIN            PA9
 
 //#define USE_UART3
@@ -163,7 +163,7 @@
 #define VRX_LED0_PIN PB5
 #define VRX_LED1_PIN PB4
 
-#define VRX_BTN0_PIN    PA9
+#define VRX_BTN0_PIN    PA10
 
 #define VRX_BTN1_PIN    PA8
 

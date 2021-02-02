@@ -942,7 +942,7 @@ void decrementVrxMode(vrxModule *vrxM){
 }
 void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
 {
-     bool reading = !vrxBtnRead(0);
+     bool reading = vrxBtnRead(0);
         if(reading){
             VRX_LED0_ON;
         } else {
