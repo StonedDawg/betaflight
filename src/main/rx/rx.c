@@ -73,14 +73,14 @@
 #define BUTTON_DEBOUNCE_DELAY 3000
 
 typedef struct vrxModule {
-    uint8_t mode;
+    uint8_t mode=0;
 } vrxModule;
 
 typedef struct vrxModuleBtn {
-    timeUs_t lastDebounceTime;
-    bool lastReading;
-    bool pressed;
-    timeUs_t changedTime;
+    timeUs_t lastDebounceTime=0;
+    bool lastReading=0;
+    bool pressed=0;
+    timeUs_t changedTime=0;
 
 } vrxModuleBtn;
 
@@ -963,11 +963,11 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM)
                 timeUs_t duration = vrxBtn.changedTime - prevChangeTime;
 
                 if (duration < 5000){
-                    incrementVrxMode(vrxM);
+                    incrementVrxMode(*vrxM);
                 }
                 else if (duration < 20000){
                     
-                    decrementVrxMode(vrxM);
+                    decrementVrxMode(*vrxM);
                 }
             }
         }
