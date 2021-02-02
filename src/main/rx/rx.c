@@ -74,7 +74,7 @@
 
 typedef struct vrxModule {
     uint8_t mode;
-} vrxModule_default={0};
+} vrxModule;
 
 typedef struct vrxModuleBtn {
     timeUs_t lastDebounceTime;
@@ -82,11 +82,12 @@ typedef struct vrxModuleBtn {
     bool pressed;
     timeUs_t changedTime;
 
-} vrxModuleBtn_default ={0,0,0,0};
+} vrxModuleBtn;
 
-vrxModuleBtn vrxBtn = vrxModuleBtn_default;
-vrxModule vrxMdl = vrxModule_default;
-
+vrxModuleBtn vrxBtn;
+vrxModule vrxMdl;
+vrxBtn = {0,0,0,0};
+vrxMdl = {0};
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
 static uint16_t rssi1 = 0;                  // range: [0;1023]
