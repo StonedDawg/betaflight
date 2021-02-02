@@ -140,6 +140,9 @@ void pgResetFn_vrxPinsConfig(vrxPinsConfig_t *vrxPinsConfig)
 #ifdef vrxPins3_INVERTED
     | BIT(3)
 #endif
+#ifdef vrxPins3_INVERTED
+    | BIT(4)
+#endif
     ;
 }
 

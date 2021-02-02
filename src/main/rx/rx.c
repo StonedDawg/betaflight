@@ -943,7 +943,14 @@ void decrementVrxMode(vrxModule *vrxM){
 void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
 {
      bool reading = !vrxBtnRead(0);
-     if (reading != vrxB->lastReading) {
+        if(reading){
+            VRX_LED0_ON;
+        } else {
+            VRX_LED0_OFF;
+        }
+
+     /**
+      * if (reading != vrxB->lastReading) {
             vrxB->lastDebounceTime = currentTimeUs;
         }
 
@@ -972,7 +979,7 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
                 }
             }
         }
-        /**
+        
         if (vrxB->pressed) {
             timeUs_t duration = currentTimeUs - vrxB->changedTime;
             
