@@ -163,7 +163,7 @@
 #define VRX_LED0_PIN PB5
 #define VRX_LED1_PIN PB4
 
-#define VRX_BTN0_PIN    PA10
+#define VRX_BTN0_PIN    PA9
 
 #define VRX_BTN1_PIN    PA8
 
