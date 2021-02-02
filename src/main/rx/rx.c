@@ -968,6 +968,8 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
                         } else {
                             vrxM->mode = 0;
                         }
+                        
+                    VRX_LED0_TOGGLE;
                 }
                 else if (duration < 20000){
                     
