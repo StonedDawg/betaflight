@@ -867,12 +867,12 @@ int32_t nextReceiver = activeReceiver;
         }else if(vrxM->mode == 1){
             
                     VRX_DIVERSITY_0;
-                    VRX_LED0_OFF;
+                    VRX_LED0_ON;
                     activeReceiver = 0;
         } else {
             
                     VRX_DIVERSITY_1;
-                    VRX_LED0_ON;
+                    VRX_LED0_OFF;
                     activeReceiver = 1;
         }
         //VRX_DIVERSITY_TOGGLE;
@@ -969,14 +969,10 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
             if (!vrxB->pressed) {
                 timeUs_t duration = vrxB->changedTime - prevChangeTime;
 
-                if (duration < 500000){
-                    if(vrxM->mode < 2){
-                        vrxM->mode++;
-                    } else {
-                        vrxM->mode = 0;
-                    }
+                if (duration < 1500000){
+                    incrementVrxMode(vrxM);
                 }
-                else if (duration < 2000000){
+                else if (duration < 3000000){
                     
                     decrementVrxMode(vrxM);
                     //VRX_LED0_TOGGLE;
@@ -987,7 +983,7 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
         if (vrxB->pressed) {
             timeUs_t duration = currentTimeUs - vrxB->changedTime;
             
-            if (duration >= 2000000){
+            if (duration >= 3000000){
                 VRX_LED1_ON;
             }
         }
