@@ -820,7 +820,7 @@ static void updateRSSIPWM(void)
 int32_t activeReceiver = 0;
 int32_t diversityTargetReceiver = 0;
 
-static void updateDiversity(timeUs_t currentTimeUs, vrxDock* vrxBay)
+static void updateVrxMode(timeUs_t currentTimeUs, vrxDock* vrxBay)
 {
 #ifndef USE_ADC
     UNUSED(currentTimeUs);
@@ -1010,7 +1010,7 @@ void updateRSSI(timeUs_t currentTimeUs)
 
         updateRSSI1ADC(currentTimeUs);
         updateRSSI2ADC(currentTimeUs);
-        updateDiversity(currentTimeUs,&vrxMdl);
+        updateVrxMode(currentTimeUs,&vrxMdl);
         updateVrxBtn(currentTimeUs,&vrxMdl,&vrxBtn);
         updateVrxLed(currentTimeUs,&vrxMdl);
         
