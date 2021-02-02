@@ -856,12 +856,12 @@ int32_t nextReceiver = activeReceiver;
         if(vrxM->mode == 0){
         if (nextReceiver == 0) {
                     VRX_DIVERSITY_0;
-                    VRX_LED0_OFF;
+                    VRX_LED0_ON;
                     activeReceiver = nextReceiver;
                 }
                 if (nextReceiver == 1){
                     VRX_DIVERSITY_1;
-                    VRX_LED0_ON;
+                    VRX_LED0_OFF;
                     activeReceiver = nextReceiver;
                 } 
         }else if(vrxM->mode == 1){
