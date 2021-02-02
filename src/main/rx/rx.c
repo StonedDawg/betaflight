@@ -942,7 +942,7 @@ void decrementVrxMode(vrxModule *vrxM){
 }
 void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
 {
-     bool reading = vrxBtnRead(0);
+     bool reading = !vrxBtnRead(0);
         /**
          if(reading){
             VRX_LED0_ON;
@@ -970,8 +970,11 @@ void updateVrxBtn(timeUs_t currentTimeUs, vrxModule* vrxM, vrxModuleBtn* vrxB)
                 timeUs_t duration = vrxB->changedTime - prevChangeTime;
 
                 if (duration < 5000){
-                    incrementVrxMode(vrxM);
-                    //VRX_LED0_TOGGLE;
+                    if(vrxM->mode < 2){
+                        vrxM->mode++;
+                    } else {
+                        vrxM->mode = 0;
+                    }
                 }
                 else if (duration < 20000){
                     
