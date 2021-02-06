@@ -70,7 +70,6 @@
 #include "rx/rx_spi.h"
 #include "rx/targetcustomserial.h"
 
-#define BUTTON_DEBOUNCE_DELAY 300000
 
 typedef struct vrxDock {
     uint8_t mode;
@@ -136,6 +135,8 @@ uint32_t rcInvalidPulsPeriod[MAX_SUPPORTED_RC_CHANNEL_COUNT];
 #define DELAY_33_HZ (1000000 / 33)
 #define DELAY_10_HZ (1000000 / 10)
 #define DELAY_5_HZ (1000000 / 5)
+
+#define BUTTON_DEBOUNCE_DELAY 300000
 #define SKIP_RC_ON_SUSPEND_PERIOD 1500000           // 1.5 second period in usec (call frequency independent)
 #define SKIP_RC_SAMPLES_ON_RESUME  2                // flush 2 samples to drop wrong measurements (timing independent)
 

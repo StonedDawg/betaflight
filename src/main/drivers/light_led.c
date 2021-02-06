@@ -241,8 +241,8 @@ bool vrxPinsRead(int pin)
 
 void vrxDualSwitchSet(bool state)
 {
-    vrxPinsSet(0, state);
-    vrxPinsSet(1, !state);
+    vrxPinsSet(0, !state);
+    vrxPinsSet(1, state);
 }
 
 bool vrxBtnRead(int pin)
